@@ -8,7 +8,7 @@ You can use [Wolfram Alpha](https://www.wolframalpha.com/) to figure out which "
 
 If you need your first day of study to start at 0, you can adjust the offset (in the example above, 2) to suit your needs. If you need a different number of study days to cycle through, adjust the modulus (in the example above, 10).
 
-###### :fallen_leaf: created on 2021-05-31, last updated on 2021-05-31
+###### 🍂 created on 2021-05-31, last updated on 2021-05-31
 
 ## Categorization system
-:fallen_leaf: _Leaves_ are for random thoughts that aren't likely to be revisited once posted
+🍂 _Leaves_ are for random thoughts that aren't likely to be revisited once posted
