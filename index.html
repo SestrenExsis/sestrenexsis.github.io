@@ -11,6 +11,8 @@ var first_possible_seed = document.querySelector('#first-possible-seed');
 var MOD = 0x100000000;
 var spawn_indexes = [81, 210, 339, 468];
 
+var spawns = [1, 2, 3, 4, 6, 7, 8, 5];
+
 function mul32(a, b)
 {
 	// From: https://stackoverflow.com/questions/6232939/
@@ -30,25 +32,56 @@ function hex(value, padding) {
   return result;
 }
 
-function NiceRng(initial_seed) {
-	this.seed = initial_seed % MOD;
+function NiceRng() {
+	this.seed = 0x00000000;
+  this.index = 0;
 }
 
 NiceRng.prototype.current = function () {
-  let result = this.seed >> 0x18;
+  let result = 0xff & (this.seed >> 0x18);
   return result;
 }
 
 NiceRng.prototype.next = function () {
 	this.seed = (mul32(0x01010101, this.seed) + 1) % MOD;
+  this.index += 1;
   let result = this.current();
   return result;
 }
 
 dracula_spawn_pattern.addEventListener('input', function() {
-	let rng = new NiceRng(0x00000000);
-	rng.next()
-  first_possible_seed.textContent = 'first possible seed: ' + hex(rng.seed, 8) + '\n';
+	let rng = new NiceRng();
+  let patterns = [];
+  if (dracula_spawn_pattern.value.length < 4) {
+  	first_possible_seed.textContent = 'first possible seed: n/a\n';
+  }
+  else {
+  	first_possible_seed.textContent = 'first possible seed: calculating ...\n';
+  	    while (true) {
+        	let pattern = spawns[rng.current() & 7];
+  	      patterns.push(pattern);
+  	      rng.next();
+  	      let n = patterns.length;
+  	      if (n < 412) {
+  	        continue;
+  	      }
+  	      if (patterns[n - 388] != parseInt(dracula_spawn_pattern.value.charAt(0))) {
+  	        continue;
+  	      }
+  	      if (patterns[n - 259] != parseInt(dracula_spawn_pattern.value.charAt(1))) {
+  	        continue;
+  	      }
+  	      if (patterns[n - 130] != parseInt(dracula_spawn_pattern.value.charAt(2))) {
+  	        continue;
+  	      }
+  	      if (patterns[n - 1] != parseInt(dracula_spawn_pattern.value.charAt(3))) {
+  	        continue;
+  	      }
+  	      break;
+  	    }
+  	    first_possible_seed.textContent = 'first possible seed: ' + (patterns.length - 469) + '\n';
+  	    rng.next()
+  }
 });
   //]]></script>
   </body>
