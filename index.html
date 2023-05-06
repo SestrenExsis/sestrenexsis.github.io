@@ -1,7 +1,54 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <h1>Hello World</h1>
-    <p>I'm hosted with GitHub Pages.</p>
+    <h1>Dracula Spawn Patterns</h1>
+    <input id="dracula-spawn-pattern">
+    <div id="first-possible-seed" style="white-space:pre;"></div>
+    <script type="text/javascript">//<![CDATA[
+var dracula_spawn_pattern = document.querySelector('#dracula-spawn-pattern');
+var first_possible_seed = document.querySelector('#first-possible-seed');
+var MOD = 0x100000000;
+var spawn_indexes = [81, 210, 339, 468];
+
+function mul32(a, b)
+{
+	// From: https://stackoverflow.com/questions/6232939/
+  a >>>= 0;
+  b >>>= 0;
+  let lo = a & 0xffff;
+  let hi = a - lo;
+  let result = (((hi * b) >>> 0) + (lo * b)) >>> 0;
+  return result
+}
+
+function hex(value, padding) {
+  let result = value.toString(16).toUpperCase();
+  while (result.length < padding) {
+    result = "0" + result;
+  }
+  return result;
+}
+
+function NiceRng(initial_seed) {
+	this.seed = initial_seed % MOD;
+}
+
+NiceRng.prototype.current = function () {
+  let result = this.seed >> 0x18;
+  return result;
+}
+
+NiceRng.prototype.next = function () {
+	this.seed = (mul32(0x01010101, this.seed) + 1) % MOD;
+  let result = this.current();
+  return result;
+}
+
+dracula_spawn_pattern.addEventListener('input', function() {
+	let rng = new NiceRng(0x00000000);
+	rng.next()
+  first_possible_seed.textContent = 'first possible seed: ' + hex(rng.seed, 8) + '\n';
+});
+  //]]></script>
   </body>
 </html>
