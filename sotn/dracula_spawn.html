@@ -64,7 +64,7 @@ dracula_spawn_pattern.addEventListener('input', function() {
   let rng = new NiceRng();
   let spawns = [];
   let target_found = false;
-  while (!target_found && spawns.length < 1000000) {
+  while (!target_found && spawns.length < 10000000) {
     let spawn = spawn_ids[rng.current() & 7];
     spawns.push(spawn);
     target_found = true;
@@ -84,7 +84,14 @@ dracula_spawn_pattern.addEventListener('input', function() {
   }
   let index = spawns.length - (max_spawn_index + 1);
   // console.log(spawns.length, spawns);
-  first_possible_index.textContent = 'first possible index: ' + index + '\n';
+  if (target_found)
+  {
+    first_possible_index.textContent = 'first possible index: ' + index + '\n';
+  }
+  else
+  {
+    first_possible_index.textContent = 'first possible index: too expensive to calculate\n';
+  }
 });
   //]]></script>
   </body>
