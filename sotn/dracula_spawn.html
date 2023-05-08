@@ -1,11 +1,41 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <h1>Dracula Spawn Patterns</h1>
+        <div id="instructions">
+            <h1>Dracula Spawn Patterns</h1>
+            <p>In Castlevania: Symphony of the Night, the locations Dracula teleports to during the Prologue are determined by a pseudo-random number generator (PRNG).</p>
+            <p>On Xbox, this PRNG is set to a value of 0 whenever you boot up the game for the first time or relaunch the game through the START menu.</p>
+            <p>Certain actions in-game will advance the value of this PRNG, and use it to determine which of certain outcomes happen, such as where Dracula will teleport to during the Prologue.</p>
+            <p>The value of the PRNG can be referred to by the number of PRNG calls it takes to reach that value starting from a value of 0x00000000 (given in hexadecimal), which is called its index. For example, if the PRNG begins at value 0x00000000, that value has an index of 0, and the value 0x0FE15632 has an index of 3378 because it takes 3,378 PRNG calls to reach that value.</p>
+            <p>When you make a save file, whatever value the PRNG is at when you save will be stored with that save file.</p>
+            <p>It is possible to set the value of the PRNG to whatever value was stored in one of your save files by copying or renaming a save file.</p>
+            <p>Actions such as breaking candles or vases advance the PRNG by fixed amounts.</p>
             <div><img src="dracula_spawn.png"></img></div>
             <div><input id="dracula-spawn-pattern"></div>
             <div id="first-possible-index" style="white-space:pre;"></div>
             <div id="first-possible-seed" style="white-space:pre;"></div>
+            <p>On the Xbox, the seed value stored inside a save file can be inferred by performing the actions given below. Be sure to only break candles when instructed, and do not break any vases.</p>
+            <ol>
+                <li>Rename a save file to load the PRNG seed with that save file's PRNG seed</li>
+                <li>Start a new game and, without breaking any candles or vases, walk into the throne room</li>
+                <li>Watch where Dracula teleports and, using the image on this page, write down his first four teleport positions (Note: You don't need to avoid damage or do anything at all with Richter during this part)</li>
+                <li>Exit the game via the Xbox START menu</li>
+                <li>Rename the same save file you renamed earlier to reload the same PRNG seed from earlier</li>
+                <li>Start another new game and break exactly one candle before heading into the throne room</li>
+                <li>Write down Dracula's first four teleport positions (these will be the 5th through 8th numbers you write down)</li>
+                <li>Exit the game via the Xbox START menu</li>
+                <li>Rename the same save file again</li>
+                <li>Start another new game and break exactly two candles before heading into the throne room</li>
+                <li>Write down Dracula's first four teleport positions (these will be the 9th through 12th numbers you write down)</li>
+                <li>Exit the game via the Xbox START menu</li>
+                <li>Rename the same save file again</li>
+                <li>Start another new game and break exactly three candles before heading into the throne room</li>
+                <li>Write down Dracula's first four teleport positions (these will be the 13th through 16th numbers you write down)</li>
+                <li>Enter those 16 numbers in order into the text box on this page</li>
+            </ol>
+            <p>Once you have followed the instructions given, the initial seed value and its index should appear below the input text box.</p>
+            <p>Once you have figured out a save file's seed value and index, it can be helpful to write that down so it does not need to be determined again. Now, you can start new runs with that save file's RNG value whenever you want by first renaming the save file before starting a new run.</p>
+        </div>
         <script type="text/javascript" src="dracula_spawn.js"></script>
     </body>
 </html>
