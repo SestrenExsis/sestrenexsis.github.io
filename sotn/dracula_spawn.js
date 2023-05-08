@@ -32,26 +32,28 @@ function hex(value) {
 }
 
 class NiceRng {
-constructor()
-{
-    this.seed = 0x00000000;
-    this.index = 0;
+    constructor()
+    {
+        this.seed = 0x00000000;
+        this.index = 0;
+    }
+
+    current()
+    {
+        let result = 0xff & (this.seed >> 0x18);
+        return result;
+    }
+
+    next()
+    {
+        this.seed = (mul32(0x01010101, this.seed) + 1) % MOD;
+        this.index += 1;
+        let result = this.current();
+        return result;
+    }
 }
 
-current()
-{
-    let result = 0xff & (this.seed >> 0x18);
-    return result;
-}
-
-next()
-{
-    this.seed = (mul32(0x01010101, this.seed) + 1) % MOD;
-    this.index += 1;
-    let result = this.current();
-    return result;
-}
-}
+// TODO(sestren): Putting a question mark after fuzzes the position?
 
 dracula_spawn_pattern.addEventListener('input', function() {
     first_possible_index.textContent = 'first possible index: calculating ...\n';
