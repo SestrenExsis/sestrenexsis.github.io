@@ -1,6 +1,6 @@
-var dracula_spawn_pattern = document.querySelector('#dracula-spawn-pattern');
-var first_possible_index = document.querySelector('#first-possible-index');
-var first_possible_seed = document.querySelector('#first-possible-seed');
+var dracula_spawn_pattern = document.querySelector('#dracula_spawn_pattern');
+var first_possible_index = document.querySelector('#first_possible_index');
+var first_possible_seed = document.querySelector('#first_possible_seed');
 var MOD = 0x100000000;
 var spawn_indexes = [
     81, 210, 339, 468, // first 4 Dracula spawn indexes, 0 candles
