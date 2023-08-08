@@ -7,10 +7,22 @@
                 <label for="nice_rng_index">Index:</label><br>
                 <input id="nice_rng_index" type="number" style="font-family: monospace;"
                     value="0" min="0" max="4294967295" /><br>
-                <label for="nice_rng_seed">Seed:</label><br>
-                <input id="nice_rng_seed" type="text" value="00000000" style="font-family: monospace;" /><br>
+
+                <label for="nice_rng_seed">Seed (hexadecimal):</label><br>
+                <input id="nice_rng_seed" type="text" style="font-family: monospace;" 
+                    value="00000000" /><br>
+
                 <label for="nice_rng_value">Value:</label><br>
-                <input id="nice_rng_value" type="number" value="0" style="font-family: monospace;" />
+                <input id="nice_rng_value" type="number" style="font-family: monospace;" 
+                    value="0" disabled /><br>
+
+                <label for="nice_rng_mask">Mask:</label><br>
+                <input id="nice_rng_mask" type="number" style="font-family: monospace;" 
+                    value="255" min="0" max="255" /><br>
+                
+                <label for="nice_rng_masked_value">Masked Value:</label><br>
+                <input id="nice_rng_masked_value" type="number" style="font-family: monospace;"
+                    value="0" disabled />
             </form>
         </div>
         <script type="text/javascript" src="nice_rng.js"></script>

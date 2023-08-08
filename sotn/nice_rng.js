@@ -2,6 +2,8 @@
 var nice_rng_index = document.getElementById('nice_rng_index');
 var nice_rng_seed = document.getElementById('nice_rng_seed');
 var nice_rng_value = document.getElementById('nice_rng_value');
+var nice_rng_mask = document.getElementById('nice_rng_mask');
+var nice_rng_masked_value = document.getElementById('nice_rng_masked_value');
 var MOD = 0x100000000;
 
 function mul32(a, b)
@@ -99,8 +101,11 @@ class NiceRng {
     }
 }
 
-nice_rng_index.addEventListener('input', function() {
+function refreshNiceRNGValuesFromIndex()
+{
     nice_rng_seed.value = 'calculating ...';
+    nice_rng_value.value = 'calculating ...';
+    nice_rng_masked_value.value = 'calculating ...';
     let target_index = nice_rng_index.value % MOD;
     let rng = new NiceRng();
     while (rng.index < target_index)
@@ -139,5 +144,15 @@ nice_rng_index.addEventListener('input', function() {
     }
     nice_rng_seed.value = hex(rng.seed);
     nice_rng_value.value = rng.current();
+    nice_rng_masked_value.value = nice_rng_value.value & nice_rng_mask.value;
+}
+
+nice_rng_index.addEventListener('input', function()
+{
+    refreshNiceRNGValuesFromIndex()
+});
+nice_rng_mask.addEventListener('input', function()
+{
+    refreshNiceRNGValuesFromIndex()
 });
 
