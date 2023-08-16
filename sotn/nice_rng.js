@@ -1,10 +1,6 @@
-
-var nice_rng_index = document.getElementById('nice_rng_index');
-var nice_rng_seed = document.getElementById('nice_rng_seed');
-var nice_rng_value = document.getElementById('nice_rng_value');
-var nice_rng_mask = document.getElementById('nice_rng_mask');
-var nice_rng_masked_value = document.getElementById('nice_rng_masked_value');
-var MOD = 0x100000000;
+var url_parameters = new URLSearchParams(window.location.search);
+var SEED_MOD = 0x100000000;
+var MASK_MOD = 0x100;
 
 function mul32(a, b)
 {
@@ -41,7 +37,7 @@ class NiceRng {
 
     next()
     {
-        this.seed = (mul32(0x01010101, this.seed) + 1) % MOD;
+        this.seed = (mul32(0x01010101, this.seed) + 1) % SEED_MOD;
         this.index += 1;
         let result = this.current();
         return result;
@@ -94,7 +90,7 @@ class NiceRng {
             b = 0x10000000;
             c = 268435456
         }
-        this.seed = (mul32(a, this.seed) + b) % MOD;
+        this.seed = (mul32(a, this.seed) + b) % SEED_MOD;
         this.index += c;
         let result = this.current();
         return result;
@@ -103,15 +99,17 @@ class NiceRng {
 
 function refreshNiceRNGValuesFromIndex()
 {
-    nice_rng_seed.value = 'calculating ...';
-    nice_rng_value.value = 'calculating ...';
-    nice_rng_masked_value.value = 'calculating ...';
-    let target_index = nice_rng_index.value % MOD;
+    document.getElementById('nice_rng_index').value = (
+        document.getElementById('nice_rng_index').value % SEED_MOD
+    );
+    document.getElementById('nice_rng_mask').value = (
+        document.getElementById('nice_rng_mask').value % MASK_MOD
+    );
     let rng = new NiceRng();
-    while (rng.index < target_index)
+    while (rng.index < document.getElementById('nice_rng_index').value)
     {
         let tumbler_id = 1
-        let diff = target_index - rng.index;
+        let diff = document.getElementById('nice_rng_index').value - rng.index;
         if (diff >= 268435456)
         {
             tumbler_id = 8;
@@ -142,17 +140,39 @@ function refreshNiceRNGValuesFromIndex()
         }
         rng.nextWithTumbler(tumbler_id);
     }
-    nice_rng_seed.value = hex(rng.seed);
-    nice_rng_value.value = rng.current();
-    nice_rng_masked_value.value = nice_rng_value.value & nice_rng_mask.value;
+    document.getElementById('nice_rng_seed').value = hex(rng.seed);
+    document.getElementById('nice_rng_value').value = rng.current();
+    document.getElementById('nice_rng_masked_value').value = rng.current() & document.getElementById('nice_rng_mask').value;
 }
+
+if (url_parameters.get('index') == null)
+{
+    url_parameters.set('index', 0);
+}
+
+if (url_parameters.get('mask') == null)
+{
+    url_parameters.set('mask', 255);
+}
+
+document.getElementById('nice_rng_index').value = url_parameters.get('index');
+document.getElementById('nice_rng_mask').value = url_parameters.get('mask');
+refreshNiceRNGValuesFromIndex();
 
 nice_rng_index.addEventListener('input', function()
 {
     refreshNiceRNGValuesFromIndex()
+    const url = new URL(window.location);
+    url.searchParams.set('index', document.getElementById('nice_rng_index').value);
+    url.searchParams.set('mask', document.getElementById('nice_rng_mask').value);
+    history.pushState({}, "", url);
 });
+
 nice_rng_mask.addEventListener('input', function()
 {
     refreshNiceRNGValuesFromIndex()
+    const url = new URL(window.location);
+    url.searchParams.set('index', document.getElementById('nice_rng_index').value);
+    url.searchParams.set('mask', document.getElementById('nice_rng_mask').value);
+    history.pushState({}, "", url);
 });
-
