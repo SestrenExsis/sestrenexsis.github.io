@@ -99,45 +99,16 @@ class NiceRng {
 
 function refreshNiceRNGValuesFromIndex()
 {
-    document.getElementById('nice_rng_index').value = (
-        document.getElementById('nice_rng_index').value % SEED_MOD
-    );
+    let nice_rng_index__value = document.getElementById('nice_rng_index').value;
+    document.getElementById('nice_rng_index').value = (nice_rng_index__value % SEED_MOD);
     document.getElementById('nice_rng_mask').value = (
         document.getElementById('nice_rng_mask').value % MASK_MOD
     );
     let rng = new NiceRng();
-    while (rng.index < document.getElementById('nice_rng_index').value)
+    while (rng.index < nice_rng_index__value)
     {
-        let tumbler_id = 1
-        let diff = document.getElementById('nice_rng_index').value - rng.index;
-        if (diff >= 268435456)
-        {
-            tumbler_id = 8;
-        }
-        else if (diff >= 16777216)
-        {
-            tumbler_id = 7;
-        }
-        else if (diff >= 1048576)
-        {
-            tumbler_id = 6;
-        }
-        else if (diff >= 65536)
-        {
-            tumbler_id = 5;
-        }
-        else if (diff >= 4096)
-        {
-            tumbler_id = 4;
-        }
-        else if (diff >= 256)
-        {
-            tumbler_id = 3;
-        }
-        else if (diff >= 16)
-        {
-            tumbler_id = 2;
-        }
+        let diff = nice_rng_index__value - rng.index;
+        let tumbler_id = 1 + Math.floor(Math.log(diff) / Math.log(16));
         rng.nextWithTumbler(tumbler_id);
     }
     document.getElementById('nice_rng_seed').value = hex(rng.seed);
