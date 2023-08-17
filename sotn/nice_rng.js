@@ -136,7 +136,7 @@ nice_rng_index.addEventListener('input', function()
     const url = new URL(window.location);
     url.searchParams.set('index', document.getElementById('nice_rng_index').value);
     url.searchParams.set('mask', document.getElementById('nice_rng_mask').value);
-    history.pushState({}, "", url);
+    history.replaceState({}, "", url);
 });
 
 nice_rng_mask.addEventListener('input', function()
@@ -145,5 +145,5 @@ nice_rng_mask.addEventListener('input', function()
     const url = new URL(window.location);
     url.searchParams.set('index', document.getElementById('nice_rng_index').value);
     url.searchParams.set('mask', document.getElementById('nice_rng_mask').value);
-    history.pushState({}, "", url);
+    history.replaceState({}, "", url);
 });
