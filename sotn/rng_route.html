@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="instructions">
+            <h1>RNG Route</h1>
+            <div id="starting_seed">
+            <h2>Starting Seed</h2>
+            <form>
+                <label for="nice_rng_index">Index:</label><br>
+                <input id="nice_rng_index" type="number" style="font-family: monospace;"
+                    value="0" min="0" max="4294967295" /><br>
+
+                <label for="nice_rng_seed">Seed (hexadecimal):</label><br>
+                <input id="nice_rng_seed" type="text" style="font-family: monospace;" 
+                    value="00000000" disabled /><br>
+            </form>
+        </div>
+        <div id="prologue">
+            <h2>Prologue</h2>
+            <h3>Dracula's Spawn Location</h3>
+            <p><strong>NOTE:</strong> Input how many candles and vases are broken before Dracula's first teleport.</p>
+            <form>
+                <label for="short_candles">Short candelabras:</label><br>
+                <input id="short_candles" type="number" style="font-family: monospace;" 
+                    value="0" min="0" max="255" /><br>
+                <label for="tall_candles">Tall candelabras:</label><br>
+                <input id="tall_candles" type="number" style="font-family: monospace;" 
+                    value="0" min="0" max="255" /><br>
+                <label for="vases">Vases:</label><br>
+                <input id="vases" type="number" style="font-family: monospace;" 
+                    value="0" min="0" max="255" /><br>
+                <label for="dracula_spawn">Dracula Spawn Index:</label><br>
+                <input id="dracula_spawn" type="number" style="font-family: monospace;"
+                    value="0" min="0" max="7" disabled />
+            </form>
+        </div>
+        <script type="text/javascript" src="rng_route.js"></script>
+    </body>
+</html>
