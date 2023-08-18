@@ -122,26 +122,26 @@ function refreshNiceRNGValuesFromIndex()
     document.getElementById('nice_rng_masked_value').value = rng.current() & document.getElementById('nice_rng_mask').value;
 }
 
-if (url_parameters.get('index') == null)
+if (url_parameters.get('nice_rng_index') == null)
 {
-    url_parameters.set('index', 0);
+    url_parameters.set('nice_rng_index', 0);
 }
 
-if (url_parameters.get('mask') == null)
+if (url_parameters.get('nice_rng_mask') == null)
 {
-    url_parameters.set('mask', 255);
+    url_parameters.set('nice_rng_mask', 255);
 }
 
-document.getElementById('nice_rng_index').value = url_parameters.get('index');
-document.getElementById('nice_rng_mask').value = url_parameters.get('mask');
+document.getElementById('nice_rng_index').value = url_parameters.get('nice_rng_index');
+document.getElementById('nice_rng_mask').value = url_parameters.get('nice_rng_mask');
 refreshNiceRNGValuesFromIndex();
 
 nice_rng_index.addEventListener('input', function()
 {
     refreshNiceRNGValuesFromIndex()
     const url = new URL(window.location);
-    url.searchParams.set('index', document.getElementById('nice_rng_index').value);
-    url.searchParams.set('mask', document.getElementById('nice_rng_mask').value);
+    url.searchParams.set('nice_rng_index', document.getElementById('nice_rng_index').value);
+    url.searchParams.set('nice_rng_mask', document.getElementById('nice_rng_mask').value);
     history.replaceState({}, "", url);
 });
 
@@ -149,7 +149,7 @@ nice_rng_mask.addEventListener('input', function()
 {
     refreshNiceRNGValuesFromIndex()
     const url = new URL(window.location);
-    url.searchParams.set('index', document.getElementById('nice_rng_index').value);
-    url.searchParams.set('mask', document.getElementById('nice_rng_mask').value);
+    url.searchParams.set('nice_rng_index', document.getElementById('nice_rng_index').value);
+    url.searchParams.set('nice_rng_mask', document.getElementById('nice_rng_mask').value);
     history.replaceState({}, "", url);
 });
