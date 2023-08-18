@@ -1,6 +1,6 @@
 var url_parameters = new URLSearchParams(window.location.search);
-var SEED_MOD = 0x100000000;
-var MASK_MOD = 0x100;
+var MAX_SEED = 0xFFFFFFFF;
+var MAX_MASK = 0xFF;
 
 function mul32(a, b)
 {
@@ -37,7 +37,7 @@ class NiceRng {
 
     next()
     {
-        this.seed = (mul32(0x01010101, this.seed) + 1) % SEED_MOD;
+        this.seed = (mul32(0x01010101, this.seed) + 1) % (MAX_SEED + 1);
         this.index += 1;
         let result = this.current();
         return result;
@@ -90,7 +90,7 @@ class NiceRng {
             b = 0x10000000;
             c = 268435456
         }
-        this.seed = (mul32(a, this.seed) + b) % SEED_MOD;
+        this.seed = (mul32(a, this.seed) + b) % (MAX_SEED + 1);
         this.index += c;
         let result = this.current();
         return result;
@@ -99,15 +99,21 @@ class NiceRng {
 
 function refreshNiceRNGValuesFromIndex()
 {
-    let nice_rng_index__value = document.getElementById('nice_rng_index').value;
-    document.getElementById('nice_rng_index').value = (nice_rng_index__value % SEED_MOD);
-    document.getElementById('nice_rng_mask').value = (
-        document.getElementById('nice_rng_mask').value % MASK_MOD
-    );
+    // Clamp index between 0x00000000 and 0xFFFFFFFF
+    let nice_rng_index = document.getElementById('nice_rng_index').value;
+    nice_rng_index = Math.max(nice_rng_index, 0);
+    nice_rng_index = Math.min(nice_rng_index, MAX_SEED);
+    document.getElementById('nice_rng_index').value = nice_rng_index;
+    // Clamp mask between 0x00 and 0xFF
+    let nice_rng_mask = document.getElementById('nice_rng_mask').value;
+    nice_rng_mask = Math.max(nice_rng_mask, 0);
+    nice_rng_mask = Math.min(nice_rng_mask, MAX_MASK);
+    document.getElementById('nice_rng_mask').value = nice_rng_mask;
+    // Update derived values
     let rng = new NiceRng();
-    while (rng.index < nice_rng_index__value)
+    while (rng.index < nice_rng_index)
     {
-        let diff = nice_rng_index__value - rng.index;
+        let diff = nice_rng_index - rng.index;
         let tumbler_id = 1 + Math.floor(Math.log(diff) / Math.log(16));
         rng.nextWithTumbler(tumbler_id);
     }
