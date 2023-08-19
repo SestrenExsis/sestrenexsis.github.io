@@ -100,7 +100,25 @@ function refresh()
     rng.push(80);
     // Determine Dracula spawn position
     let dracula_spawn = (0x7 & rng.next());
-    document.getElementById('dracula_spawn').value = dracula_spawn;
+    let dracula_spawn_label = "ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR";
+    // Spawn Positions
+    // ---------------
+    // ..H.........H..
+    // w.H....^....H.w
+    // |.H.w..H..w.H.|
+    // |.H.|.....|.H.|
+    // +---+-----+---+
+    // .1.2.3.456.7.8. << Position
+    // .0.1.2.374.5.6. << Index
+    if (dracula_spawn == 0) { dracula_spawn_label = "1: between CANDLE 1 and the LEFT COLUMN"; }
+    else if (dracula_spawn == 1) { dracula_spawn_label = "2: between the LEFT COLUMN and CANDLE 2"; }
+    else if (dracula_spawn == 2) { dracula_spawn_label = "3: between CANDLE 2 and the THRONE"; }
+    else if (dracula_spawn == 3) { dracula_spawn_label = "4: directly in FRONT of the THRONE"; }
+    else if (dracula_spawn == 7) { dracula_spawn_label = "5: just to the RIGHT of the THRONE"; }
+    else if (dracula_spawn == 4) { dracula_spawn_label = "6: just to the LEFT of CANDLE 3"; }
+    else if (dracula_spawn == 5) { dracula_spawn_label = "7: between CANDLE 3 and the RIGHT COLUMN"; }
+    else if (dracula_spawn == 6) { dracula_spawn_label = "8: between the RIGHT COLUMN and CANDLE 4"; }
+    document.getElementById('dracula_spawn').value = dracula_spawn_label;
 }
 
 if (url_parameters.get('nice_rng_index') == null)
@@ -172,13 +190,3 @@ vases.addEventListener('input', function()
     url.searchParams.set('vases', document.getElementById('vases').value);
     history.replaceState({}, "", url);
 });
-
-// Spawn Positions
-// ---------------
-// ..H.........H..
-// w.H....^....H.w
-// |.H.w..H..w.H.|
-// |.H.|.....|.H.|
-// +---+-----+---+
-// .1.2.3.456.7.8.
-// .0.1.2.374.5.6.
