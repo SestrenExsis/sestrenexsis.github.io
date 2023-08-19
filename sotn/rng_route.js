@@ -22,10 +22,21 @@ function hex(value) {
 }
 
 class NiceRng {
+    static tumblers = [
+        {a: 0x01010101, b: 0x00000001, c: 1},
+        {a: 0x30881001, b: 0xf6a87810, c: 16},
+        {a: 0x80810001, b: 0xeaff8100, c: 256},
+        {a: 0x08100001, b: 0x27f81000, c: 4096},
+        {a: 0x81000001, b: 0x7f810000, c: 65536},
+        {a: 0x10000001, b: 0xf8100000, c: 1048576},
+        {a: 0x00000001, b: 0x81000000, c: 16777216},
+        {a: 0x00000001, b: 0x10000000, c: 268435456},
+    ];
     constructor()
     {
         this.seed = 0x00000000;
         this.index = 0;
+        this.calls = 0;
     }
 
     current()
@@ -38,61 +49,23 @@ class NiceRng {
     {
         this.seed = (mul32(0x01010101, this.seed) + 1) % (MAX_SEED + 1);
         this.index += 1;
+        this.calls += 1;
         let result = this.current();
         return result;
     }
 
-    nextWithTumbler(id)
+    push(amount)
     {
-        let a = 0x01010101
-        let b = 0x00000001
-        let c = 1
-        if (id == 2)
+        let target_index = this.index + amount;
+        while (this.index < target_index)
         {
-            a = 0x30881001;
-            b = 0xf6a87810;
-            c = 16
+            let diff = target_index - this.index;
+            let tumbler_id = Math.floor(Math.log(diff) / Math.log(16));
+            let tumbler = NiceRng.tumblers.at(tumbler_id);
+            this.seed = (mul32(tumbler.a, this.seed) + tumbler.b) % (MAX_SEED + 1);
+            this.index += tumbler.c;
+            this.calls += tumbler.c;
         }
-        else if (id == 3)
-        {
-            a = 0x80810001;
-            b = 0xeaff8100;
-            c = 256
-        }
-        else if (id == 4)
-        {
-            a = 0x08100001;
-            b = 0x27f81000;
-            c = 4096
-        }
-        else if (id == 5)
-        {
-            a = 0x81000001;
-            b = 0x7f810000;
-            c = 65536
-        }
-        else if (id == 6)
-        {
-            a = 0x10000001;
-            b = 0xf8100000;
-            c = 1048576
-        }
-        else if (id == 7)
-        {
-            a = 0x00000001;
-            b = 0x81000000;
-            c = 16777216
-        }
-        else if (id == 8)
-        {
-            a = 0x00000001;
-            b = 0x10000000;
-            c = 268435456
-        }
-        this.seed = (mul32(a, this.seed) + b) % (MAX_SEED + 1);
-        this.index += c;
-        let result = this.current();
-        return result;
     }
 }
 
@@ -104,12 +77,8 @@ function refresh()
     nice_rng_index = Math.max(nice_rng_index, 0);
     nice_rng_index = Math.min(nice_rng_index, MAX_SEED);
     document.getElementById('nice_rng_index').value = nice_rng_index;
-    while (rng.index < nice_rng_index)
-    {
-        let diff = nice_rng_index - rng.index;
-        let tumbler_id = 1 + Math.floor(Math.log(diff) / Math.log(16));
-        rng.nextWithTumbler(tumbler_id);
-    }
+    rng.push(nice_rng_index);
+    rng.calls = 0;
     document.getElementById('nice_rng_seed').value = hex(rng.seed);
     // Clamp candles and vases between 0 and 255
     let short_candles = document.getElementById('short_candles').value;
@@ -125,17 +94,11 @@ function refresh()
     vases = Math.min(vases, 255);
     document.getElementById('vases').value = vases;
     // Simulate first part of Prologue
-    nice_rng_index += 8 * short_candles;
-    nice_rng_index += 10 * tall_candles;
-    nice_rng_index += 2 * vases;
-    nice_rng_index += 80
+    rng.push(8 * short_candles);
+    rng.push(10 * tall_candles);
+    rng.push(2 * vases);
+    rng.push(80);
     // Determine Dracula spawn position
-    while (rng.index < nice_rng_index)
-    {
-        let diff = nice_rng_index - rng.index;
-        let tumbler_id = 1 + Math.floor(Math.log(diff) / Math.log(16));
-        rng.nextWithTumbler(tumbler_id);
-    }
     let dracula_spawn = (0x7 & rng.next());
     document.getElementById('dracula_spawn').value = dracula_spawn;
 }
@@ -209,3 +172,13 @@ vases.addEventListener('input', function()
     url.searchParams.set('vases', document.getElementById('vases').value);
     history.replaceState({}, "", url);
 });
+
+// Spawn Positions
+// ---------------
+// ..H.........H..
+// w.H....^....H.w
+// |.H.w..H..w.H.|
+// |.H.|.....|.H.|
+// +---+-----+---+
+// .1.2.3.456.7.8.
+// .0.1.2.374.5.6.
