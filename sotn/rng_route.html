@@ -18,6 +18,7 @@
         <div id="prologue">
             <h2>Dracula Spawn RNG</h2>
             <h3>Prologue</h3>
+            <p><strong>Breakables</strong> are the only source of RNG prior to Dracula's first spawn.</p>
             <p><strong>NOTE:</strong> How many candles and vases are broken before entering the throne room.</p>
             <form>
                 <label for="candles">Candles:</label><br>
@@ -39,11 +40,13 @@
         <div id="entrance">
             <h2>Spittlebone RNG</h2>
             <h3>Drawbridge Cutscene</h3>
+            <p id="calls_before_drawbridge_cutscene"><em>X RNG calls made prior to this room</em></p>
             <p><strong>Lightning strikes</strong> are a time-unstable source of RNG.</p>
             <p>Since it is happening during a fixed duration cutscene, it is deterministic, but entirely out of the player's control.</p>
+            <p id="calls_during_drawbridge_cutscene"><em>+X RNG calls made in this room</em></p>
             <h3>Entrance</h3>
             <p><strong>Lightning strikes</strong> are a time-unstable source of RNG.</p>
-            <p>An input-unstable source of RNG comes from the <strong>Warg's death animation</strong>, assuming the player tries to leave the room before it has finished.</p>
+            <p>An input-unstable source of RNG comes from the <strong>Warg's death animation</strong>, assuming the player tries to leave the room quickly, before it has finished.</p>
             <form>
                 <label for="move_frames">Frames between first player input and start of Warg death:</label><br>
                 <input id="move_frames" type="number" style="font-family: monospace;" value="60" min="60" max="255" /><br>
@@ -51,10 +54,15 @@
                 <input id="warg_death_frames" type="number" style="font-family: monospace;" value="30" min="30" max="255" /><br>
             </form>
             <h3>Zombie Hallway</h3>
+            <p><strong>Lightning strikes</strong> are a time-unstable source of RNG.</p>
+            <p>The <strong>Zombie spawner</strong> is a time-unstable source of RNG.</p>
             <h3>Merman Room</h3>
+            <p>Provided you don't wake the Mermen, there are no unstable sources of RNG in this room.</p>
             <h3>Warg Hallway</h3>
             <h3>Death's Meeting Room</h3>
+            <p>Provided you skip Death, there are no sources of RNG in this room.</p>
             <h3>Death's Stairwell</h3>
+            <p>Breaking candles is the only source of RNG in this room.</p>
             <h3>Softlock Gap</h3>
             <h3>Cube of Zoe Room</h3>
             <h3>Alchemy Lab Entrance</h3>

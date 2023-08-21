@@ -168,13 +168,21 @@ function refresh(update_url) {
     tall_candles = Math.min(tall_candles, 2);
     document.getElementById('tall_candles').value = tall_candles;
     let move_frames = document.getElementById('move_frames').value;
-    move_frames = Math.max(move_frames, 60);
+    move_frames = Math.max(move_frames, 0);
     move_frames = Math.min(move_frames, 999);
     document.getElementById('move_frames').value = move_frames;
     let warg_death_frames = document.getElementById('warg_death_frames').value;
-    warg_death_frames = Math.max(warg_death_frames, 30);
+    warg_death_frames = Math.max(warg_death_frames, 0);
     warg_death_frames = Math.min(warg_death_frames, 999);
     document.getElementById('warg_death_frames').value = warg_death_frames;
+    // Update URL if requested
+    if (update_url) {
+        const url = new URL(window.location);
+        inputs.forEach((input) => {
+            url.searchParams.set(input.id, document.getElementById(input.id).value);
+        })
+        history.replaceState({}, "", url);
+    }
     /* =========== PROLOGUE ============ */
     rng.push(8 * candles);
     rng.push(2 * vases);
@@ -200,12 +208,15 @@ function refresh(update_url) {
     rng.push(225) // Dracula transforms
     // TODO(sestren): Verify that RNG is always 30, even with damage stacks
     rng.push(30) // Damage on Dracula during second phase (assumes no whips)
+    let prev_calls = rng.calls;
+    document.getElementById('calls_before_drawbridge_cutscene').innerHTML = "<em>+" + prev_calls + " RNG calls made prior to this room</em>";
     /* ====== DRAWBRIDGE CUTSCENE ====== */
     let lightning = new EntityLightningFlash(rng);
     for (let i = 0; i < 750; i++)
     {
         lightning.update();
     }
+    document.getElementById('calls_during_drawbridge_cutscene').innerHTML = "<em>+" + (rng.calls - prev_calls) + " RNG calls made in this room</em>";
     /* ============ ENTRANCE =========== */
     lightning = new EntityLightningFlash(rng);
     warg = new EntityWarg(rng);
@@ -216,22 +227,11 @@ function refresh(update_url) {
     for (let i = 0; i < move_frames; i++) {
         lightning.update()
     }
-    for (let i = 0; i < move_frames; i++) {
-        lightning.update()
-    }
     warg.kill()
     for (let i = 0; i < warg_death_frames; i++) {
         warg.update()
     }
     /* ======= END OF SIMULATION ======= */
-    // Update URL if requested
-    if (update_url) {
-        const url = new URL(window.location);
-        inputs.forEach((input) => {
-            url.searchParams.set(input.id, document.getElementById(input.id).value);
-        })
-        history.replaceState({}, "", url);
-    }
     console.log(rng.calls);
 }
 
