@@ -1,6 +1,6 @@
 
 var url_parameters = new URLSearchParams(window.location.search);
-var inputs = [
+const inputs = [
     "entrance__warg1",
     "zombie_hallway__warg1",
     "zombie_hallway__warg2",
@@ -16,27 +16,170 @@ var inputs = [
     "warg_hallway__warg1",
     "warg_hallway__warg2",
     "warg_hallway__warg3",
-]
+];
 
-var xp = 0;
-var level = 1;
+class Player {
+    // 0x800AC784
+    static levels = [
+        -1,  // Fake level so that indexing of levels matches level in-game
+        0,
+        100,
+        250,
+        450,
+        700,
+        1000,
+        1350,
+        1750,
+        2200,
+        2700,
+        3250,
+        3850,
+        4500,
+        5200,
+        5950,
+        6750,
+        7600,
+        8500,
+        9450,
+        10450,
+        11700,
+        13200,
+        15100,
+        17500,
+        20400,
+        23700,
+        27200,
+        30900,
+        35000,
+        39500,
+        44500,
+        50000,
+        56000,
+        61500,
+        68500,
+        76000,
+        84000,
+        92500,
+        101500,
+        110000,
+        120000,
+        130000,
+        140000,
+        150000,
+        160000,
+        170000,
+        180000,
+        190000,
+        200000,
+        210000,
+        222000,
+        234000,
+        246000,
+        270000,
+        282000,
+        294000,
+        306000,
+        318000,
+        330000,
+        344000,
+        358000,
+        372000,
+        386000,
+        400000,
+        414000,
+        428000,
+        442000,
+        456000,
+        470000,
+        486000,
+        502000,
+        518000,
+        534000,
+        550000,
+        566000,
+        582000,
+        598000,
+        614000,
+        630000,
+        648000,
+        666000,
+        684000,
+        702000,
+        720000,
+        738000,
+        756000,
+        774000,
+        792000,
+        810000,
+        830000,
+        850000,
+        870000,
+        890000,
+        910000,
+        930000,
+        950000,
+        970000,
+        999999,
+        1000000,
+    ];
+    constructor() {
+        this.xp = 0;
+    }
 
-function kill() {
+    get level() {
+        // NOTE(sestren): Go with O(N) searching for now; everything is fast for small N
+        let result = 0
+        while (this.xp >= Player.levels.at(result + 1)) {
+            if (result >= (Player.levels.length - 1)) {
+                result = 99;
+                break;
+            }
+            result += 1;
+        }
+        return result;
+    }
 
+    kill(monster) {
+        let xp_gain = monster.base_xp;
+        if (monster.level < this.level) {
+            let gap = this.level - monster.level;
+            for (let i = 0; i < gap; i++) {
+                xp_gain /= 3;
+            }
+            if (xp_gain < 1) {
+                xp_gain = 1;
+            }
+        }
+        else if (this.level < monster.level) {
+            let gap = monster.level - this.level;
+            if (gap > 5) {
+                gap = 5;
+            }
+            for (let i = 0; i < gap; i++) {
+                let temp = xp_gain >> 2;
+                xp_gain += temp;
+            }
+        }
+        this.xp += xp_gain;
+    }
+}
+
+class Monster {
+    constructor() {
+        this.name = "Warg";
+        this.level = 2;
+        this.base_xp = 10;
+    }
 }
 
 function refresh(update_url) {
-    xp = 0;
-    level = 1;
+    let player = new Player();
     inputs.forEach((input_id) => {
         if (document.getElementById(input_id).checked) {
-            xp += 1;
-            if (xp % 4 == 0) {
-                level += 1;
-            }
+            player.xp += 12;
         }
     });
-    console.log("xp: " + xp + ", level: " + level);
+    console.log("xp: " + player.xp + ", level: " + player.level);
     // Update URL if requested
     if (update_url) {
         const url = new URL(window.location);
