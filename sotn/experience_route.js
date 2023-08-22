@@ -16,6 +16,14 @@ const inputs = [
     "warg_hallway__warg1",
     "warg_hallway__warg2",
     "warg_hallway__warg3",
+    "cube_of_zoe_room__bone_scimitar1",
+    "cube_of_zoe_room__bone_scimitar2",
+    "alchemy_lab_entrance__bone_scimitar1",
+    "alchemy_lab_entrance__bone_scimitar2",
+    "alchemy_lab_entrance__skeleton1",
+    "alchemy_lab_spike_room__bone_scimitar1",
+    "alchemy_lab_spike_room__bone_scimitar2",
+    "alchemy_lab_spike_room__bone_scimitar3",
 ];
 
 class Player {
@@ -144,7 +152,7 @@ class Player {
         if (monster.level < this.level) {
             let gap = this.level - monster.level;
             for (let i = 0; i < gap; i++) {
-                xp_gain /= 3;
+                xp_gain = Math.floor(xp_gain / 3);
             }
             if (xp_gain < 1) {
                 xp_gain = 1;
@@ -165,18 +173,27 @@ class Player {
 }
 
 class Monster {
-    constructor() {
-        this.name = "Warg";
-        this.level = 2;
-        this.base_xp = 10;
+    constructor(level, base_xp) {
+        this.level = level;
+        this.base_xp = base_xp;
     }
 }
+
+let monsters = {
+    "Warg": new Monster(2, 10),
+    "Zombie": new Monster(1, 5),
+    "Bat": new Monster(1, 10),
+    "Bone Scimitar": new Monster(3, 15),
+    "Skeleton": new Monster(2, 10),
+};
 
 function refresh(update_url) {
     let player = new Player();
     inputs.forEach((input_id) => {
-        if (document.getElementById(input_id).checked) {
-            player.xp += 12;
+        let element = document.getElementById(input_id);
+        if (element.checked) {
+            let monster = monsters[element.value];
+            player.kill(monster);
         }
     });
     console.log("xp: " + player.xp + ", level: " + player.level);
