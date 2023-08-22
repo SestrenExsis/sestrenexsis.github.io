@@ -209,7 +209,7 @@ function refresh(update_url) {
     // TODO(sestren): Verify that RNG is always 30, even with damage stacks
     rng.push(30) // Damage on Dracula during second phase (assumes no whips)
     let prev_calls = rng.calls;
-    document.getElementById('calls_before_drawbridge_cutscene').innerHTML = "<em>+" + prev_calls + " RNG calls made prior to this room</em>";
+    document.getElementById('calls_before_drawbridge_cutscene').innerHTML = "<em>" + prev_calls + " RNG calls made prior to this room</em>";
     /* ====== DRAWBRIDGE CUTSCENE ====== */
     let lightning = new EntityLightningFlash(rng);
     for (let i = 0; i < 750; i++)
