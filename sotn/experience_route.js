@@ -30,6 +30,29 @@ const inputs = [
     "spittlebone_room_1__axe_knight_green2",
     "spittlebone_room_1__spittle_bone2",
     "spittlebone_room_3__spittle_bone3",
+    "spittlebone_room_2__spittle_bone1",
+    "spittlebone_room_2__spittle_bone2",
+    "slogra_and_gaibon__skip",
+    "slogra_and_gaibon__double_kill",
+    "slogra_and_gaibon__no_double_kill",
+    "room_after_slogra_and_gaibon__bone_scimitar1",
+    "room_after_slogra_and_gaibon__bone_scimitar2",
+    "room_after_slogra_and_gaibon__bloody_zombie1",
+    "bloody_zombie_hallway__bloody_zombie1",
+    "bloody_zombie_hallway__bloody_zombie2",
+    "bloody_zombie_hallway__bloody_zombie3",
+    "bloody_zombie_hallway__bloody_zombie4",
+    "alchemy_lab_exit__axe_knight_green1",
+    "alchemy_lab_exit__axe_knight_green2",
+    "alchemy_lab_exit__spittlebone1",
+    "alchemy_lab_exit__axe_knight_green3",
+    "marble_gallery_entrance__axe_knight_green1",
+    "marble_gallery_entrance__axe_knight_green2",
+    "marble_gallery_entrance__axe_knight_green3",
+    "lone_green_axe_knight__axe_knight_green1",
+    // "",
+    "doppelganger_fight__skip",
+    "doppelganger_fight__doppleganger",
 ];
 
 class Player {
@@ -138,6 +161,7 @@ class Player {
     ];
     constructor() {
         this.xp = 0;
+        this.level_up_animations = 0;
     }
 
     get level() {
@@ -153,28 +177,34 @@ class Player {
         return result;
     }
 
-    kill(monster) {
-        let xp_gain = monster.base_xp;
-        if (monster.level < this.level) {
-            let gap = this.level - monster.level;
-            for (let i = 0; i < gap; i++) {
-                xp_gain = Math.floor(xp_gain / 3);
+    kill(monsters) {
+        let prev_level = this.level;
+        let total_xp_gains = 0;
+        monsters.forEach((monster) => {
+            let xp_gain = monster.base_xp;
+            if (monster.level < this.level) {
+                let gap = this.level - monster.level;
+                for (let i = 0; i < gap; i++) {
+                    xp_gain = Math.floor(xp_gain / 3);
+                }
+                if (xp_gain < 1) {
+                    xp_gain = 1;
+                }
             }
-            if (xp_gain < 1) {
-                xp_gain = 1;
+            else if (this.level < monster.level) {
+                let gap = monster.level - this.level;
+                if (gap > 5) {
+                    gap = 5;
+                }
+                for (let i = 0; i < gap; i++) {
+                    let temp = xp_gain >> 2;
+                    xp_gain += temp;
+                }
             }
-        }
-        else if (this.level < monster.level) {
-            let gap = monster.level - this.level;
-            if (gap > 5) {
-                gap = 5;
-            }
-            for (let i = 0; i < gap; i++) {
-                let temp = xp_gain >> 2;
-                xp_gain += temp;
-            }
-        }
-        this.xp += xp_gain;
+            total_xp_gains += xp_gain;
+        });
+        this.xp += total_xp_gains;
+        this.level_up_animations += (((this.level - prev_level) > 0) ? 1 : 0);
     }
 }
 
@@ -238,11 +268,22 @@ function refresh(update_url) {
     inputs.forEach((input_id) => {
         let element = document.getElementById(input_id);
         if (element.checked) {
-            let monster = monsters[element.value];
-            player.kill(monster);
+            if (element.value == "Slogra and Gaibon Double Kill") {
+                player.kill([
+                    monsters["Slogra"],
+                    monsters["Gaibon"],
+                ]);
+            }
+            else if (element.value == "No Slogra and Gaibon Double Kill") {
+                player.kill([monsters["Slogra"]]);
+                player.kill([monsters["Gaibon"]]);
+            }
+            else if (element.value != "Skip") {
+                player.kill([monsters[element.value]]);
+            }
         }
     });
-    console.log("xp: " + player.xp + ", level: " + player.level);
+    console.log("xp: " + player.xp + ", level: " + player.level + ", level-up animations: " + player.level_up_animations);
     // Update URL if requested
     if (update_url) {
         const url = new URL(window.location);
