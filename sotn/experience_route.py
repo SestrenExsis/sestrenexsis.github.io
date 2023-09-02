@@ -2,60 +2,60 @@
 import collections
 
 monster_ids = {
-    "Warg": 'warg',
-    "Zombie": 'zombie',
-    "Bat": 'bat',
-    "Bone Scimitar": 'bone_scimitar',
-    "Skeleton": 'skeleton',
-    "Spittle Bone": 'spittle_bone',
-    "Axe Knight (Green)": 'axe_knight_green',
-    "Slogra": 'slogra',
-    "Gaibon": 'gaibon',
-    "Bloody Zombie": 'bloody_zombie',
-    "Flea Man": 'flea_man',
-    "Ouija Table": 'ouija_table',
-    "Slinger": 'slinger',
-    "Diplocephalus": 'diplocephalus',
-    "Stone Rose": 'stone_rose',
-    "Axe Knight (Blue)": 'axe_knight_blue',
-    "Doppleganger10": 'doppleganger10',
-    "Skeleton Ape": 'skeleton_ape',
-    "Spear Guard": 'spear_guard',
-    "Bone Archer": 'bone_archer',
-    "Bone Musket": 'bone_musket',
-    "Medusa Head (Green)": 'medusa_head_green',
-    "Medusa Head (Golden)": 'medusa_head_golden',
-    "Sword Lord": 'sword_lord',
-    "Skelerang": 'skelerang',
-    "Spectral Sword": 'spectral_sword',
-    "Blade Soldier": 'blade_soldier',
-    "Blade Master": 'blade_master',
-    "Werewolf": 'werewolf',
-    "Minotaurus": 'minotaurus',
-    "Spellbook": 'spellbook',
-    "Corpseweed": 'corpseweed',
-    "Flea Armor": 'flea_armor',
-    "Dhuron": 'Dhuron',
-    "Lesser Demon": 'lesser_demon',
-    "Ectoplasm": 'ectoplasm',
-    "Harpy": 'harpy',
-    "Vandal Sword": 'vandal_sword',
-    "Karasuman": 'karasuman',
-    "Tombstone": 'tombstone',
-    "Balloon Pod": 'balloon_pod',
-    "Black Panther": 'black_panther',
-    "Medusa": 'medusa',
-    "Sniper of Goth": 'sniper_of_goth',
-    "Imp": 'imp',
+    "Warg": 'a',
+    "Zombie": 'b',
+    "Bat": 'c',
+    "Bone Scimitar": 'd',
+    "Skeleton": 'e',
+    "Spittle Bone": 'f',
+    "Axe Knight (Green)": 'g',
+    "Slogra": 'h',
+    "Gaibon": 'i',
+    "Bloody Zombie": 'j',
+    "Flea Man": 'k',
+    "Ouija Table": 'l',
+    "Slinger": 'm',
+    "Diplocephalus": 'n',
+    "Stone Rose": 'o',
+    "Axe Knight (Blue)": 'p',
+    "Doppleganger10": 'q',
+    "Skeleton Ape": 'r',
+    "Spear Guard": 's',
+    "Bone Archer": 't',
+    "Bone Musket": 'u',
+    "Medusa Head (Green)": 'v',
+    "Medusa Head (Golden)": 'w',
+    "Sword Lord": 'x',
+    "Skelerang": 'y',
+    "Spectral Sword": 'z',
+    "Blade Soldier": 'A',
+    "Blade Master": 'B',
+    "Werewolf": 'C',
+    "Minotaurus": 'D',
+    "Spellbook": 'E',
+    "Corpseweed": 'F',
+    "Flea Armor": 'G',
+    "Dhuron": 'H',
+    "Lesser Demon": 'I',
+    "Ectoplasm": 'J',
+    "Harpy": 'K',
+    "Vandal Sword": 'L',
+    "Karasuman": 'M',
+    "Tombstone": 'N',
+    "Balloon Pod": 'O',
+    "Black Panther": 'P',
+    "Medusa": 'Q',
+    "Sniper of Goth": 'R',
+    "Imp": 'S',
     
-    "Skip Slogra and Gaibon": 'skip_slogra_and_gaibon',
-    "Slogra and Gaibon Double Kill": 'double_kill_slogra_and_gaibon',
-    "No Slogra and Gaibon Double Kill": 'kill_slogra_and_gaibon',
+    "Skip Slogra and Gaibon": 'T',
+    "Slogra and Gaibon Double Kill": 'U',
+    "No Slogra and Gaibon Double Kill": 'V',
     
-    "Skip Werewolf and Minotaurus": "skip_werewolf_and_minotaurus",
-    "Kill Werewolf First": 'kill_werewolf_then_minotaurus',
-    "Kill Minotaurus First": 'kill_minotaurus_then_werewolf',
-    "Werewolf and Minotaurus Double Kill": 'double_kill_werewolf_and_minotaurus',
+    "Skip Werewolf and Minotaurus": "W",
+    "Kill Werewolf First": 'X',
+    "Kill Minotaurus First": 'Y',
+    "Werewolf and Minotaurus Double Kill": 'Z',
 }
 
 groups = {
@@ -71,7 +71,7 @@ groups = {
 rooms = [
     {
         'name': "Entrance - Gate",
-        'id': "entrance",
+        'id': "aa",
         'type': "checkbox",
         'monsters': [
             'Warg',
@@ -79,7 +79,7 @@ rooms = [
     },
     {
         'name': "Entrance - Zombie Hallway",
-        'id': "zombie_hallway",
+        'id': "ab",
         'type': "checkbox",
         'monsters': [
             'Warg',
@@ -93,7 +93,7 @@ rooms = [
     },
     {
         'name': "Entrance - Merman Room",
-        'id': "merman_room",
+        'id': "ac",
         'type': "checkbox",
         'monsters': [
             'Bat',
@@ -104,7 +104,7 @@ rooms = [
     },
     {
         'name': "Entrance - Warg Hallway",
-        'id': "warg_hallway",
+        'id': "ad",
         'type': "checkbox",
         'monsters': [
             'Warg',
@@ -114,7 +114,7 @@ rooms = [
     },
     {
         'name': "Entrance - Cube of Zoe Room",
-        'id': "cube_of_zoe_room",
+        'id': "ae",
         'type': "checkbox",
         'monsters': [
             'Bone Scimitar',
@@ -123,7 +123,7 @@ rooms = [
     },
     {
         'name': "Alchemy Lab - Entrance",
-        'id': "alchemy_lab_entrance",
+        'id': "ba",
         'type': "checkbox",
         'monsters': [
             'Bone Scimitar',
@@ -133,7 +133,7 @@ rooms = [
     },
     {
         'name': "Alchemy Lab - Spike Room",
-        'id': "alchemy_lab_spike_room",
+        'id': "bb",
         'type': "checkbox",
         'monsters': [
             'Bone Scimitar',
@@ -143,7 +143,7 @@ rooms = [
     },
     {
         'name': "Alchemy Lab - Zig Zag Stairs",
-        'id': "zig_zag_stairs",
+        'id': "bc",
         'type': "checkbox",
         'monsters': [
             'Skeleton',
@@ -151,7 +151,7 @@ rooms = [
     },
     {
         'name': "Alchemy Lab - Spittlebone Room 1",
-        'id': "spittlebone_room_1",
+        'id': "bd",
         'type': "checkbox",
         'monsters': [
             'Spittle Bone',
@@ -163,7 +163,7 @@ rooms = [
     },
     {
         'name': "Alchemy Lab - Spittlebone Room 2",
-        'id': "spittlebone_room_2",
+        'id': "be",
         'type': "checkbox",
         'monsters': [
             'Spittle Bone',
@@ -172,7 +172,7 @@ rooms = [
     },
     {
         'name': "Alchemy Lab - Slogra and Gaibon Room",
-        'id': "slogra_and_gaibon_room",
+        'id': "bf",
         'type': "radio",
         'monsters': [
             'Skip Slogra and Gaibon',
@@ -182,7 +182,7 @@ rooms = [
     },
     {
         'name': "Alchemy Lab - Room After Slogra and Gaibon",
-        'id': "room_after_slogra_and_gaibon",
+        'id': "bg",
         'type': "checkbox",
         'monsters': [
             'Bone Scimitar',
@@ -192,7 +192,7 @@ rooms = [
     },
     {
         'name': "Alchemy Lab - Bloody Zombie Hallway",
-        'id': "bloody_zombie_hallway",
+        'id': "bh",
         'type': "checkbox",
         'monsters': [
             'Bloody Zombie',
@@ -203,7 +203,7 @@ rooms = [
     },
     {
         'name': "Alchemy Lab - Exit",
-        'id': "alchemy_lab_exit",
+        'id': "bi",
         'type': "checkbox",
         'monsters': [
             'Axe Knight (Green)',
@@ -214,7 +214,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Entrance",
-        'id': "marble_gallery_entrance",
+        'id': "ca",
         'type': "checkbox",
         'monsters': [
             'Axe Knight (Green)',
@@ -224,7 +224,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Lone Green Axe Knight",
-        'id': "lone_green_axe_knight",
+        'id': "cb",
         'type': "checkbox",
         'monsters': [
             'Axe Knight (Green)',
@@ -232,7 +232,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Left of Clock Room",
-        'id': "left_of_clock_room",
+        'id': "cc",
         'type': "checkbox",
         'monsters': [
             'Flea Man',
@@ -241,7 +241,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Right of Clock Room",
-        'id': "right_of_clock_room",
+        'id': "cd",
         'type': "checkbox",
         'monsters': [
             'Flea Man',
@@ -249,7 +249,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Ouija Table Room",
-        'id': "ouija_table_room",
+        'id': "ce",
         'type': "checkbox",
         'monsters': [
             'Ouija Table',
@@ -261,7 +261,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Stopwatch Room",
-        'id': "stopwatch_room",
+        'id': "cf",
         'type': "checkbox",
         'monsters': [
             'Skeleton',
@@ -271,7 +271,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Staircase Room",
-        'id': "staircase_room",
+        'id': "cg",
         'type': "checkbox",
         'monsters': [
             'Skeleton',
@@ -279,7 +279,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Long Hallway",
-        'id': "long_hallway",
+        'id': "ch",
         'type': "checkbox",
         'monsters': [
             'Diplocephalus',
@@ -291,7 +291,7 @@ rooms = [
     },
     {
         'name': "Outer Wall - Before Doppel",
-        'id': "outer_wall_before_doppel",
+        'id': "da",
         'type': "checkbox",
         'monsters': [
             'Axe Knight (Blue)',
@@ -300,7 +300,7 @@ rooms = [
     },
     {
         'name': "Outer Wall - Doppelganger Fight",
-        'id': "doppelganger_fight",
+        'id': "db",
         'type': "checkbox",
         'monsters': [
             'Doppleganger10',
@@ -308,7 +308,7 @@ rooms = [
     },
     {
         'name': "Outer Wall - Elevator Section",
-        'id': "outer_wall",
+        'id': "dc",
         'type': "checkbox",
         'monsters': [
             'Skeleton',
@@ -328,7 +328,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Long Hallway, Return",
-        'id': "long_hallway_return",
+        'id': "ea",
         'type': "checkbox",
         'monsters': [
             'Stone Rose',
@@ -340,7 +340,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Staircase Room, Return",
-        'id': "staircase_room_return",
+        'id': "eb",
         'type': "checkbox",
         'monsters': [
             'Skeleton',
@@ -348,7 +348,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Stopwatch Room, Return",
-        'id': "stopwatch_room_return",
+        'id': "ec",
         'type': "checkbox",
         'monsters': [
             'Skeleton',
@@ -358,7 +358,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Ouija Table Room, Return",
-        'id': "ouija_table_room_return",
+        'id': "ed",
         'type': "checkbox",
         'monsters': [
             'Skeleton',
@@ -370,7 +370,7 @@ rooms = [
     },
     {
         'name': "Marble Gallery - Right of Clock Room, Return",
-        'id': "right_of_clock_room_return",
+        'id': "ee",
         'type': "checkbox",
         'monsters': [
             'Flea Man',
@@ -378,7 +378,7 @@ rooms = [
     },
     {
         'name': "Olrox's Quarters - Skelerang Room",
-        'id': "skelerang_room",
+        'id': "fa",
         'type': "checkbox",
         'monsters': [
             'Skelerang',
@@ -389,7 +389,7 @@ rooms = [
     },
     {
         'name': "Olrox's Quarters - Staircase",
-        'id': "olroxs_staircase",
+        'id': "fb",
         'type': "checkbox",
         'monsters': [
             'Spectral Sword',
@@ -397,7 +397,7 @@ rooms = [
     },
     {
         'name': "Colosseum - Entrance",
-        'id': "colosseum_entrance",
+        'id': "ga",
         'type': "checkbox",
         'monsters': [
             'Blade Soldier',
@@ -406,7 +406,7 @@ rooms = [
     },
     {
         'name': "Colosseum - Blade Master Room",
-        'id': "blade_master_room",
+        'id': "gb",
         'type': "checkbox",
         'monsters': [
             'Blade Soldier',
@@ -418,7 +418,7 @@ rooms = [
     },
     {
         'name': "Colosseum - Minotaurus and Werewolf Fight",
-        'id': "minotaurus_and_werewolf_fight",
+        'id': "gc",
         'type': "radio",
         'monsters': [
             'Skip Werewolf and Minotaurus',
@@ -429,7 +429,7 @@ rooms = [
     },
     {
         'name': "Long Library - Book Room",
-        'id': "book_room",
+        'id': "ha",
         'type': "checkbox",
         'monsters': [
             'Spellbook',
@@ -445,7 +445,7 @@ rooms = [
     },
     {
         'name': "Long Library - Flea Armor and Dhuron Room",
-        'id': "flea_armor_and_dhuron_room",
+        'id': "hb",
         'type': "checkbox",
         'monsters': [
             'Flea Armor',
@@ -463,7 +463,7 @@ rooms = [
     },
     {
         'name': "Long Library - Staircase to Lesser Demon",
-        'id': "staircase_to_lesser_demon",
+        'id': "hc",
         'type': "checkbox",
         'monsters': [
             'Flea Armor',
@@ -475,7 +475,7 @@ rooms = [
     },
     {
         'name': "Long Library - Library Escape",
-        'id': "library_escape",
+        'id': "hd",
         'type': "checkbox",
         'monsters': [
             'Corpseweed',
@@ -489,7 +489,7 @@ rooms = [
     },
     {
         'name': "Clock Tower - Entrance",
-        'id': "clock_tower",
+        'id': "ia",
         'type': "checkbox",
         'monsters': [
             'Harpy',
@@ -500,7 +500,7 @@ rooms = [
     },
     {
         'name': "Clock Tower - Strange Wall Room",
-        'id': "strange_wall_room",
+        'id': "ib",
         'type': "checkbox",
         'monsters': [
             'Sword Lord',
@@ -511,7 +511,7 @@ rooms = [
     },
     {
         'name': "Clock Tower - Karasuman's Room",
-        'id': "karasumans_room",
+        'id': "ic",
         'type': "checkbox",
         'monsters': [
             'Karasuman',
@@ -519,7 +519,7 @@ rooms = [
     },
     {
         'name': "Reverse Keep - Tombstone Room",
-        'id': "tombstone_room",
+        'id': "ja",
         'type': "checkbox",
         'monsters': [
             'Tombstone',
@@ -531,7 +531,7 @@ rooms = [
     },
     {
         'name': "Anti-Chapel - Hallway Before Medusa",
-        'id': "hallway_before_medusa",
+        'id': "ka",
         'type': "checkbox",
         'monsters': [
             'Balloon Pod',
@@ -540,7 +540,7 @@ rooms = [
     },
     {
         'name': "Anti-Chapel - Medusa's Room",
-        'id': "medusas_room",
+        'id': "kb",
         'type': "checkbox",
         'monsters': [
             'Medusa',
@@ -548,7 +548,7 @@ rooms = [
     },
     {
         'name': "Anti-Chapel - Hallway After Medusa",
-        'id': "hallway_after_medusa",
+        'id': "kc",
         'type': "checkbox",
         'monsters': [
             'Black Panther',
@@ -558,7 +558,7 @@ rooms = [
     },
     {
         'name': "Anti-Chapel - Balloon Pod Room After Medusa",
-        'id': "balloon_pod_room_after_medusa",
+        'id': "kd",
         'type': "checkbox",
         'monsters': [
             'Balloon Pod',
@@ -566,7 +566,7 @@ rooms = [
     },
     {
         'name': "Anti-Chapel - Hallway to Imp Room",
-        'id': "hallway_to_imp_room",
+        'id': "ke",
         'type': "checkbox",
         'monsters': [
             'Black Panther',
@@ -581,7 +581,7 @@ rooms = [
     },
     {
         'name': "Anti-Chapel - Imp Room",
-        'id': "imp_room",
+        'id': "kf",
         'type': "checkbox",
         'monsters': [
             'Sniper of Goth',
@@ -616,11 +616,10 @@ if __name__ == '__main__':
         for monster_name in room['monsters']:
             monster_counts[monster_name] += 1
             monster_title = monster_name
-            monster_id = monster_ids[monster_name]
+            monster_id = monster_ids[monster_name] + str(monster_counts[monster_name])
             if monster_totals[monster_name] > 1:
                 monster_title += ' ' + str(monster_counts[monster_name])
-                monster_id += str(monster_counts[monster_name])
-            unique_monster_id = f'{room_id}__{monster_id}'
+            unique_monster_id = f'{room_id}{monster_id}'
             print('    "' + unique_monster_id + '",')
             if input_type == 'radio':
                 group = groups[monster_name]
