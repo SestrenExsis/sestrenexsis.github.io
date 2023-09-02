@@ -595,6 +595,9 @@ rooms = [
     },
 ]
 
+# ?aa=1&ab=1111110&ac=0000&ad=111&ae=11&ba=111&bb=100&bc=0&bd=01100
+# id="aa00"
+# id="ab00" through "ab06"
 
 if __name__ == '__main__':
     html = []
