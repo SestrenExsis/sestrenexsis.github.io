@@ -79,7 +79,7 @@ class WordZapper:
     def __init__(self, rom: ROM):
         self.name = 'Word Zapper'
         self.rom = rom
-        self.chars = set()
+        # self.chars = set()
         self.words = collections.defaultdict(set)
         self.seed = None
     
