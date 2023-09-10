@@ -28,7 +28,7 @@ class ROM {
     }
 
     get word_bank() {
-        let character_bank = this.character_bank;
+        let chars = this.character_bank;
         let result = [];
         // 4-letter words
         for (let i = 0; i < 16; i++) {
@@ -39,10 +39,10 @@ class ROM {
             let index3 = byte2 % 16;
             let index4 = Math.floor(byte2 / 16);
             let word = "" +
-                character_bank[index3] +
-                character_bank[index4] +
-                character_bank[index1] +
-                character_bank[index2];
+                chars[index3] +
+                chars[index4] +
+                chars[index1] +
+                chars[index2];
             result.push(word);
         }
         // 5-letter words
@@ -57,11 +57,11 @@ class ROM {
             let index5 = byte3 % 16;
             let index6 = Math.floor(byte3 / 16);
             let word = "" +
-                character_bank[index5] +
-                character_bank[index6] +
-                character_bank[index3] +
-                character_bank[index4] +
-                character_bank[index1];
+                chars[index5] +
+                chars[index6] +
+                chars[index3] +
+                chars[index4] +
+                chars[index1];
             result.push(word);
         }
         // 6-letter words
@@ -76,21 +76,58 @@ class ROM {
             let index5 = byte3 % 16;
             let index6 = Math.floor(byte3 / 16);
             let word = "" +
-                character_bank[index5] +
-                character_bank[index6] +
-                character_bank[index3] +
-                character_bank[index4] +
-                character_bank[index1] +
-                character_bank[index2];
+                chars[index5] +
+                chars[index6] +
+                chars[index3] +
+                chars[index4] +
+                chars[index1] +
+                chars[index2];
             result.push(word);
         }
         return result;
     }
+
+    set word_bank(value) {
+        let chars = this.character_bank;
+        // 4-letter words
+        for (let i = 0; i < 16; i++) {
+            let word = value[i];
+            let index1 = chars.indexOf(word.charAt(0));
+            let index2 = chars.indexOf(word.charAt(1));
+            let index3 = chars.indexOf(word.charAt(2));
+            let index4 = chars.indexOf(word.charAt(3));
+            rom._bytes[0x09c3 + 2 * i + 0] = (0x10 * index4) | index3;
+            rom._bytes[0x09c3 + 2 * i + 1] = (0x10 * index2) | index1;
+        }
+        // 5-letter words
+        for (let i = 0; i < 16; i++) {
+            let word = value[16 + i];
+            let index1 = chars.indexOf(word.charAt(0));
+            let index2 = chars.indexOf(word.charAt(1));
+            let index3 = chars.indexOf(word.charAt(2));
+            let index4 = chars.indexOf(word.charAt(3));
+            let index5 = chars.indexOf(word.charAt(4));
+            let index6 = 0;
+            rom._bytes[0x09e3 + 3 * i + 0] = (0x10 * index6) | index5;
+            rom._bytes[0x09e3 + 3 * i + 1] = (0x10 * index4) | index3;
+            rom._bytes[0x09e3 + 3 * i + 2] = (0x10 * index2) | index1;
+        }
+        // 6-letter words
+        for (let i = 0; i < 16; i++) {
+            let word = value[32 + i];
+            let index1 = chars.indexOf(word.charAt(0));
+            let index2 = chars.indexOf(word.charAt(1));
+            let index3 = chars.indexOf(word.charAt(2));
+            let index4 = chars.indexOf(word.charAt(3));
+            let index5 = chars.indexOf(word.charAt(4));
+            let index6 = chars.indexOf(word.charAt(5));
+            rom._bytes[0x0a13 + 3 * i + 0] = (0x10 * index6) | index5;
+            rom._bytes[0x0a13 + 3 * i + 1] = (0x10 * index4) | index3;
+            rom._bytes[0x0a13 + 3 * i + 2] = (0x10 * index2) | index1;
+        }
+    }
     
     peek(address) {
-        if (this._dirty) {
-            this.refresh();
-        }
         let result = this._bytes[address];
         return result;
     }
@@ -99,7 +136,6 @@ class ROM {
         let prev_value = this._bytes[address];
         if (value != prev_value) {
             this._bytes[address] = value;
-            this._dirty = true;
         }
     }
 }
@@ -175,6 +211,17 @@ reader.addEventListener('load', function() {
     console.log(rom.word_bank);
     rom.character_bank = "ETOAINSHRDLUPFMC";
     console.log(rom.character_bank);
+    console.log(rom.word_bank);
+    let word_bank = rom.word_bank;
+    word_bank[0] = "HOUR";
+    word_bank[16] = "PRICE";
+    word_bank[32] = "CRIMPS";
+    rom.word_bank = word_bank;
+    console.log(rom.word_bank);
+    word_bank[0] = "LAST";
+    word_bank[16] = "SAUCE";
+    word_bank[32] = "SAUCER";
+    rom.word_bank = word_bank;
     console.log(rom.word_bank);
 })
 
