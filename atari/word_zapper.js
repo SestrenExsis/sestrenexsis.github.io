@@ -9,6 +9,28 @@ class ROM {
         this._bytes = bytes;
     }
 
+    get title() {
+        let result = [];
+        for (let row = 0; row < 3; row++) {
+            let word = "";
+            for (let col = 0; col < 6; col++) {
+                let byte = this._bytes[0x0ace + 6 * row + col];
+                let char = " ";
+                if (byte >= 0x41) {
+                    let char_index = byte - 0x41 + "A".charCodeAt(0);
+                    char = String.fromCharCode(char_index);
+                }
+                word += char;
+            }
+            result.push(word);
+        }
+        return result;
+    }
+
+    set title(value) {
+        // TODO(sestren): Create setter for title
+    }
+
     get character_bank() {
         let result = "";
         for (let i = 0; i < 16; i++) {
@@ -32,8 +54,8 @@ class ROM {
         let result = [];
         // 4-letter words
         for (let i = 0; i < 16; i++) {
-            let byte1 = rom._bytes[0x09c3 + 2 * i + 0];
-            let byte2 = rom._bytes[0x09c3 + 2 * i + 1];
+            let byte1 = this._bytes[0x09c3 + 2 * i + 0];
+            let byte2 = this._bytes[0x09c3 + 2 * i + 1];
             let index1 = byte1 % 16;
             let index2 = Math.floor(byte1 / 16);
             let index3 = byte2 % 16;
@@ -47,11 +69,11 @@ class ROM {
         }
         // 5-letter words
         for (let i = 0; i < 16; i++) {
-            let byte1 = rom._bytes[0x09e3 + 3 * i + 0];
-            let byte2 = rom._bytes[0x09e3 + 3 * i + 1];
-            let byte3 = rom._bytes[0x09e3 + 3 * i + 2];
+            let byte1 = this._bytes[0x09e3 + 3 * i + 0];
+            let byte2 = this._bytes[0x09e3 + 3 * i + 1];
+            let byte3 = this._bytes[0x09e3 + 3 * i + 2];
             let index1 = byte1 % 16;
-            // let index2 = Math.floor(byte1 / 16); // NOT USED
+            // NOTE(sestren): One of the nibbles is left unused for 5-letter words
             let index3 = byte2 % 16;
             let index4 = Math.floor(byte2 / 16);
             let index5 = byte3 % 16;
@@ -66,9 +88,9 @@ class ROM {
         }
         // 6-letter words
         for (let i = 0; i < 16; i++) {
-            let byte1 = rom._bytes[0x0a13 + 3 * i + 0];
-            let byte2 = rom._bytes[0x0a13 + 3 * i + 1];
-            let byte3 = rom._bytes[0x0a13 + 3 * i + 2];
+            let byte1 = this._bytes[0x0a13 + 3 * i + 0];
+            let byte2 = this._bytes[0x0a13 + 3 * i + 1];
+            let byte3 = this._bytes[0x0a13 + 3 * i + 2];
             let index1 = byte1 % 16;
             let index2 = Math.floor(byte1 / 16);
             let index3 = byte2 % 16;
@@ -89,42 +111,47 @@ class ROM {
 
     set word_bank(value) {
         let chars = this.character_bank;
-        // 4-letter words
-        for (let i = 0; i < 16; i++) {
-            let word = value[i];
-            let index1 = chars.indexOf(word.charAt(0));
-            let index2 = chars.indexOf(word.charAt(1));
-            let index3 = chars.indexOf(word.charAt(2));
-            let index4 = chars.indexOf(word.charAt(3));
-            rom._bytes[0x09c3 + 2 * i + 0] = (0x10 * index4) | index3;
-            rom._bytes[0x09c3 + 2 * i + 1] = (0x10 * index2) | index1;
-        }
-        // 5-letter words
-        for (let i = 0; i < 16; i++) {
-            let word = value[16 + i];
-            let index1 = chars.indexOf(word.charAt(0));
-            let index2 = chars.indexOf(word.charAt(1));
-            let index3 = chars.indexOf(word.charAt(2));
-            let index4 = chars.indexOf(word.charAt(3));
-            let index5 = chars.indexOf(word.charAt(4));
-            let index6 = 0;
-            rom._bytes[0x09e3 + 3 * i + 0] = (0x10 * index6) | index5;
-            rom._bytes[0x09e3 + 3 * i + 1] = (0x10 * index4) | index3;
-            rom._bytes[0x09e3 + 3 * i + 2] = (0x10 * index2) | index1;
-        }
-        // 6-letter words
-        for (let i = 0; i < 16; i++) {
-            let word = value[32 + i];
-            let index1 = chars.indexOf(word.charAt(0));
-            let index2 = chars.indexOf(word.charAt(1));
-            let index3 = chars.indexOf(word.charAt(2));
-            let index4 = chars.indexOf(word.charAt(3));
-            let index5 = chars.indexOf(word.charAt(4));
-            let index6 = chars.indexOf(word.charAt(5));
-            rom._bytes[0x0a13 + 3 * i + 0] = (0x10 * index6) | index5;
-            rom._bytes[0x0a13 + 3 * i + 1] = (0x10 * index4) | index3;
-            rom._bytes[0x0a13 + 3 * i + 2] = (0x10 * index2) | index1;
-        }
+        let count4 = 0;
+        let count5 = 0;
+        let count6 = 0;
+        value.forEach((word) => {
+            // Add 4-letter word to the word bank
+            if (word.length == 4 && count4 < 16) {
+                let index1 = chars.indexOf(word.charAt(0));
+                let index2 = chars.indexOf(word.charAt(1));
+                let index3 = chars.indexOf(word.charAt(2));
+                let index4 = chars.indexOf(word.charAt(3));
+                this._bytes[0x09c3 + 2 * count4 + 0] = (0x10 * index4) | index3;
+                this._bytes[0x09c3 + 2 * count4 + 1] = (0x10 * index2) | index1;
+                count4 += 1;
+            }
+            // Add 5-letter word to the word bank
+            else if (word.length == 5 && count5 < 16) {
+                let index1 = chars.indexOf(word.charAt(0));
+                let index2 = chars.indexOf(word.charAt(1));
+                let index3 = chars.indexOf(word.charAt(2));
+                let index4 = chars.indexOf(word.charAt(3));
+                let index5 = chars.indexOf(word.charAt(4));
+                let index6 = 0;
+                this._bytes[0x09e3 + 3 * count5 + 0] = (0x10 * index6) | index5;
+                this._bytes[0x09e3 + 3 * count5 + 1] = (0x10 * index4) | index3;
+                this._bytes[0x09e3 + 3 * count5 + 2] = (0x10 * index2) | index1;
+                count5 += 1;
+            }
+            // Add 6-letter word to the word bank
+            else if (word.length == 6 && count6 < 16) {
+                let index1 = chars.indexOf(word.charAt(0));
+                let index2 = chars.indexOf(word.charAt(1));
+                let index3 = chars.indexOf(word.charAt(2));
+                let index4 = chars.indexOf(word.charAt(3));
+                let index5 = chars.indexOf(word.charAt(4));
+                let index6 = chars.indexOf(word.charAt(5));
+                this._bytes[0x0a13 + 3 * count6 + 0] = (0x10 * index6) | index5;
+                this._bytes[0x0a13 + 3 * count6 + 1] = (0x10 * index4) | index3;
+                this._bytes[0x0a13 + 3 * count6 + 2] = (0x10 * index2) | index1;
+                count6 += 1;
+            }
+        });
     }
     
     peek(address) {
@@ -199,37 +226,28 @@ class WordZapper {
 
 var rom = new ROM();
 var binFile = document.getElementById('bin_file');
-const reader = new FileReader();
 // var game = new WordZapper();
-
-reader.addEventListener('load', function() {
-    rom.load(new Uint8Array(reader.result));
-    console.log(rom.character_bank);
-    rom.character_bank = "ABCDEFGHIJKLMNOP";
-    console.log(rom.character_bank);
-    document.getElementById('character_bank').value = rom.character_bank;
-    console.log(rom.word_bank);
-    rom.character_bank = "ETOAINSHRDLUPFMC";
-    console.log(rom.character_bank);
-    console.log(rom.word_bank);
-    let word_bank = rom.word_bank;
-    word_bank[0] = "HOUR";
-    word_bank[16] = "PRICE";
-    word_bank[32] = "CRIMPS";
-    rom.word_bank = word_bank;
-    console.log(rom.word_bank);
-    word_bank[0] = "LAST";
-    word_bank[16] = "SAUCE";
-    word_bank[32] = "SAUCER";
-    rom.word_bank = word_bank;
-    console.log(rom.word_bank);
-})
-
-reader.addEventListener('error', function() {
-    console.log(reader.error);
-})
 
 binFile.addEventListener('change', function() {
     let file = binFile.files[0];
+    const reader = new FileReader();
+    reader.addEventListener('load', function() {
+        rom.load(new Uint8Array(reader.result));
+        console.log(rom.character_bank);
+        console.log(rom.word_bank);
+        console.log(rom.title);
+        // Create link to downloadable file
+        var data = new Blob([rom._bytes], {
+            type: 'application/octet-binary',
+        });
+        var dataURL = window.URL.createObjectURL(data);
+        var link = document.getElementById('download');
+        link.innerHTML = 'Download patched_rom.bin';
+        link.download = "patched_rom.bin";
+        link.href = dataURL;
+    })
+    reader.addEventListener('error', function() {
+        console.log(reader.error);
+    })
     reader.readAsArrayBuffer(file);
 });
