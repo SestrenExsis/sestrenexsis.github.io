@@ -28,7 +28,21 @@ class ROM {
     }
 
     set title(value) {
-        // TODO(sestren): Create setter for title
+        let chars = this.character_bank;
+        let row = 0;
+        value.forEach((line) => {
+            for (let col = 0; col < 6; col++) {
+                let byte = 0x2f;
+                if (col < line.length) {
+                    let char = line.charAt(col).toUpperCase();
+                    if (char.match(/[A-Z]/i)) {
+                        byte = 0x41 + char.charCodeAt(0) - "A".charCodeAt(0);
+                    }
+                }
+                this._bytes[0x0ace + 6 * row + col] = byte;
+            }
+            row += 1;
+        });
     }
 
     get character_bank() {
@@ -235,6 +249,12 @@ binFile.addEventListener('change', function() {
         rom.load(new Uint8Array(reader.result));
         console.log(rom.character_bank);
         console.log(rom.word_bank);
+        console.log(rom.title);
+        let title = rom.title;
+        title[0] = "SWORDS";
+        title[1] = "ABCDEF";
+        title[2] = " O O O";
+        rom.title = title;
         console.log(rom.title);
         // Create link to downloadable file
         var data = new Blob([rom._bytes], {
