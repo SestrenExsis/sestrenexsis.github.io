@@ -28,7 +28,6 @@ class ROM {
     }
 
     set title(value) {
-        let chars = this.character_bank;
         let row = 0;
         value.forEach((line) => {
             for (let col = 0; col < 6; col++) {
@@ -41,6 +40,45 @@ class ROM {
                 }
                 this._bytes[0x0ace + 6 * row + col] = byte;
             }
+            row += 1;
+        });
+    }
+
+    get intro() {
+        let cols = 4;
+        let result = [];
+        for (let row = 0; row < 3; row++) {
+            let word = "";
+            for (let col = 0; col < cols; col++) {
+                let byte = this._bytes[0x0abc + 6 * row + col];
+                let char = " ";
+                if (byte >= 0x41) {
+                    let char_index = byte - 0x41 + "A".charCodeAt(0);
+                    char = String.fromCharCode(char_index);
+                }
+                word += char;
+            }
+            result.push(word);
+            cols = 6;
+        }
+        return result;
+    }
+
+    set intro(value) {
+        let row = 0;
+        let cols = 4;
+        value.forEach((line) => {
+            for (let col = 0; col < cols; col++) {
+                let byte = 0x2f;
+                if (col < line.length) {
+                    let char = line.charAt(col).toUpperCase();
+                    if (char.match(/[A-Z]/i)) {
+                        byte = 0x41 + char.charCodeAt(0) - "A".charCodeAt(0);
+                    }
+                }
+                this._bytes[0x0abc + 6 * row + col] = byte;
+            }
+            cols = 6;
             row += 1;
         });
     }
@@ -242,20 +280,47 @@ var rom = new ROM();
 var binFile = document.getElementById('bin_file');
 // var game = new WordZapper();
 
-binFile.addEventListener('change', function() {
+function refresh() {
     let file = binFile.files[0];
     const reader = new FileReader();
     reader.addEventListener('load', function() {
         rom.load(new Uint8Array(reader.result));
         console.log(rom.character_bank);
         console.log(rom.word_bank);
-        console.log(rom.title);
-        let title = rom.title;
-        title[0] = "SWORDS";
-        title[1] = "ABCDEF";
-        title[2] = " O O O";
-        rom.title = title;
-        console.log(rom.title);
+        let word_bank = rom.word_bank
+        word_bank[0] = document.getElementById('word4a').value;
+        word_bank[1] = document.getElementById('word4b').value;
+        word_bank[2] = document.getElementById('word4c').value;
+        word_bank[3] = document.getElementById('word4d').value;
+        // word_bank[4] = document.getElementById('word4e').value;
+        // word_bank[5] = document.getElementById('word4f').value;
+        // word_bank[6] = document.getElementById('word4g').value;
+        // word_bank[7] = document.getElementById('word4h').value;
+        // word_bank[8] = document.getElementById('word4i').value;
+        // word_bank[9] = document.getElementById('word4j').value;
+        // word_bank[10] = document.getElementById('word4k').value;
+        // word_bank[11] = document.getElementById('word4l').value;
+        // word_bank[12] = document.getElementById('word4m').value;
+        // word_bank[13] = document.getElementById('word4n').value;
+        // word_bank[14] = document.getElementById('word4o').value;
+        // word_bank[15] = document.getElementById('word4p').value;
+        rom.word_bank = word_bank;
+        console.log(rom.word_bank);
+        // rom.word_bank = word_bank;
+        // console.log(rom.title);
+        // let title = rom.title;
+        // title[0] = "SWORDS";
+        // title[1] = "ABCDEF";
+        // title[2] = " O O O";
+        // rom.title = title;
+        // console.log(rom.title);
+        // console.log(rom.intro);
+        // let intro = rom.intro;
+        // intro[0] = "ABCD";
+        // intro[1] = "GHIJKL";
+        // intro[2] = "MNOPQR";
+        // rom.intro = intro;
+        // console.log(rom.intro);
         // Create link to downloadable file
         var data = new Blob([rom._bytes], {
             type: 'application/octet-binary',
@@ -265,9 +330,11 @@ binFile.addEventListener('change', function() {
         link.innerHTML = 'Download patched_rom.bin';
         link.download = "patched_rom.bin";
         link.href = dataURL;
-    })
+    });
     reader.addEventListener('error', function() {
         console.log(reader.error);
-    })
+    });
     reader.readAsArrayBuffer(file);
-});
+}
+
+binFile.addEventListener('change', refresh);
