@@ -285,36 +285,96 @@ function refresh() {
     const reader = new FileReader();
     reader.addEventListener('load', function() {
         rom.load(new Uint8Array(reader.result));
+        // Title
+        let title = rom.title
+        title[0] = document.getElementById('title1').value;
+        title[1] = document.getElementById('title2').value;
+        title[2] = document.getElementById('title3').value;
+        rom.title = title;
+        // Intro
+        let intro = rom.intro
+        intro[0] = document.getElementById('intro1').value;
+        intro[1] = document.getElementById('intro2').value;
+        intro[2] = document.getElementById('intro3').value;
+        rom.intro = intro;
+        // Word Bank
+        let word_bank = rom.word_bank
+        // 4-letter words
+        word_bank[0 + 0] = document.getElementById('word4a').value;
+        word_bank[0 + 1] = document.getElementById('word4b').value;
+        word_bank[0 + 2] = document.getElementById('word4c').value;
+        word_bank[0 + 3] = document.getElementById('word4d').value;
+        word_bank[0 + 4] = document.getElementById('word4e').value;
+        word_bank[0 + 5] = document.getElementById('word4f').value;
+        word_bank[0 + 6] = document.getElementById('word4g').value;
+        word_bank[0 + 7] = document.getElementById('word4h').value;
+        word_bank[0 + 8] = document.getElementById('word4i').value;
+        word_bank[0 + 9] = document.getElementById('word4j').value;
+        word_bank[0 + 10] = document.getElementById('word4k').value;
+        word_bank[0 + 11] = document.getElementById('word4l').value;
+        word_bank[0 + 12] = document.getElementById('word4m').value;
+        word_bank[0 + 13] = document.getElementById('word4n').value;
+        word_bank[0 + 14] = document.getElementById('word4o').value;
+        word_bank[0 + 15] = document.getElementById('word4p').value;
+        // 5-letter words
+        word_bank[16 + 0] = document.getElementById('word5a').value;
+        word_bank[16 + 1] = document.getElementById('word5b').value;
+        word_bank[16 + 2] = document.getElementById('word5c').value;
+        word_bank[16 + 3] = document.getElementById('word5d').value;
+        word_bank[16 + 4] = document.getElementById('word5e').value;
+        word_bank[16 + 5] = document.getElementById('word5f').value;
+        word_bank[16 + 6] = document.getElementById('word5g').value;
+        word_bank[16 + 7] = document.getElementById('word5h').value;
+        word_bank[16 + 8] = document.getElementById('word5i').value;
+        word_bank[16 + 9] = document.getElementById('word5j').value;
+        word_bank[16 + 10] = document.getElementById('word5k').value;
+        word_bank[16 + 11] = document.getElementById('word5l').value;
+        word_bank[16 + 12] = document.getElementById('word5m').value;
+        word_bank[16 + 13] = document.getElementById('word5n').value;
+        word_bank[16 + 14] = document.getElementById('word5o').value;
+        word_bank[16 + 15] = document.getElementById('word5p').value;
+        // 6-letter words
+        word_bank[32 + 0] = document.getElementById('word6a').value;
+        word_bank[32 + 1] = document.getElementById('word6b').value;
+        word_bank[32 + 2] = document.getElementById('word6c').value;
+        word_bank[32 + 3] = document.getElementById('word6d').value;
+        word_bank[32 + 4] = document.getElementById('word6e').value;
+        word_bank[32 + 5] = document.getElementById('word6f').value;
+        word_bank[32 + 6] = document.getElementById('word6g').value;
+        word_bank[32 + 7] = document.getElementById('word6h').value;
+        word_bank[32 + 8] = document.getElementById('word6i').value;
+        word_bank[32 + 9] = document.getElementById('word6j').value;
+        word_bank[32 + 10] = document.getElementById('word6k').value;
+        word_bank[32 + 11] = document.getElementById('word6l').value;
+        word_bank[32 + 12] = document.getElementById('word6m').value;
+        word_bank[32 + 13] = document.getElementById('word6n').value;
+        word_bank[32 + 14] = document.getElementById('word6o').value;
+        word_bank[32 + 15] = document.getElementById('word6p').value;
+        // Character bank
+        let chars_used = new Set();
+        word_bank.forEach((word) => {
+            for (let i = 0; i < word.length; i++) {
+                let char = word.charAt(i);
+                chars_used.add(char);
+            }
+        });
+        let character_bank = "";
+        Array.from(chars_used).sort().forEach((char) => {
+            character_bank += char;
+        });
+        console.log(character_bank);
+        rom.character_bank = character_bank;
+        rom.word_bank = word_bank;
         console.log(rom.character_bank);
         console.log(rom.word_bank);
-        let word_bank = rom.word_bank
-        word_bank[0] = document.getElementById('word4a').value;
-        word_bank[1] = document.getElementById('word4b').value;
-        word_bank[2] = document.getElementById('word4c').value;
-        word_bank[3] = document.getElementById('word4d').value;
-        word_bank[4] = document.getElementById('word4e').value;
-        word_bank[5] = document.getElementById('word4f').value;
-        word_bank[6] = document.getElementById('word4g').value;
-        word_bank[7] = document.getElementById('word4h').value;
-        word_bank[8] = document.getElementById('word4i').value;
-        word_bank[9] = document.getElementById('word4j').value;
-        word_bank[10] = document.getElementById('word4k').value;
-        word_bank[11] = document.getElementById('word4l').value;
-        word_bank[12] = document.getElementById('word4m').value;
-        word_bank[13] = document.getElementById('word4n').value;
-        word_bank[14] = document.getElementById('word4o').value;
-        word_bank[15] = document.getElementById('word4p').value;
-        rom.word_bank = word_bank;
-        console.log(rom.word_bank);
-        // rom.word_bank = word_bank;
-        // console.log(rom.title);
+        console.log(rom.title);
         // let title = rom.title;
         // title[0] = "SWORDS";
         // title[1] = "ABCDEF";
         // title[2] = " O O O";
         // rom.title = title;
         // console.log(rom.title);
-        // console.log(rom.intro);
+        console.log(rom.intro);
         // let intro = rom.intro;
         // intro[0] = "ABCD";
         // intro[1] = "GHIJKL";
@@ -322,11 +382,11 @@ function refresh() {
         // rom.intro = intro;
         // console.log(rom.intro);
         // Create link to downloadable file
-        var data = new Blob([rom._bytes], {
+        let data = new Blob([rom._bytes], {
             type: 'application/octet-binary',
         });
-        var dataURL = window.URL.createObjectURL(data);
-        var link = document.getElementById('download');
+        let dataURL = window.URL.createObjectURL(data);
+        let link = document.getElementById('download');
         link.innerHTML = 'Download patched_rom.bin';
         link.download = "patched_rom.bin";
         link.href = dataURL;
