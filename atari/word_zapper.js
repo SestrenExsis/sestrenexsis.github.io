@@ -277,11 +277,10 @@ class WordZapper {
 }
 
 var rom = new ROM();
-var binFile = document.getElementById('bin_file');
 // var game = new WordZapper();
 
 function refresh() {
-    let file = binFile.files[0];
+    let file = document.getElementById('bin_file').files[0];
     const reader = new FileReader();
     reader.addEventListener('load', function() {
         rom.load(new Uint8Array(reader.result));
@@ -368,19 +367,7 @@ function refresh() {
         console.log(rom.character_bank);
         console.log(rom.word_bank);
         console.log(rom.title);
-        // let title = rom.title;
-        // title[0] = "SWORDS";
-        // title[1] = "ABCDEF";
-        // title[2] = " O O O";
-        // rom.title = title;
-        // console.log(rom.title);
         console.log(rom.intro);
-        // let intro = rom.intro;
-        // intro[0] = "ABCD";
-        // intro[1] = "GHIJKL";
-        // intro[2] = "MNOPQR";
-        // rom.intro = intro;
-        // console.log(rom.intro);
         // Create link to downloadable file
         let data = new Blob([rom._bytes], {
             type: 'application/octet-binary',
@@ -395,6 +382,98 @@ function refresh() {
         console.log(reader.error);
     });
     reader.readAsArrayBuffer(file);
-}
+};
 
-binFile.addEventListener('change', refresh);
+
+function randomize() {
+    // Randomize 4-letter words
+    let chosen_words = new Set();
+    while (chosen_words.size < 16) {
+        let valid_words = [];
+        wordlist.forEach((word) => {
+            if (word.length == 4 && !chosen_words.has(word)) {
+                valid_words.push(word.toUpperCase());
+            }
+        });
+        let index = Math.floor(Math.random() * valid_words.length);
+        chosen_words.add(valid_words[index]);
+    }
+    let words = [...chosen_words];
+    document.getElementById('word4a').value = words[0];
+    document.getElementById('word4b').value = words[1];
+    document.getElementById('word4c').value = words[2];
+    document.getElementById('word4d').value = words[3];
+    document.getElementById('word4e').value = words[4];
+    document.getElementById('word4f').value = words[5];
+    document.getElementById('word4g').value = words[6];
+    document.getElementById('word4h').value = words[7];
+    document.getElementById('word4i').value = words[8];
+    document.getElementById('word4j').value = words[9];
+    document.getElementById('word4k').value = words[10];
+    document.getElementById('word4l').value = words[11];
+    document.getElementById('word4m').value = words[12];
+    document.getElementById('word4n').value = words[13];
+    document.getElementById('word4o').value = words[14];
+    document.getElementById('word4p').value = words[15];
+    // Randomize 5-letter words
+    chosen_words = new Set();
+    while (chosen_words.size < 16) {
+        let valid_words = [];
+        wordlist.forEach((word) => {
+            if (word.length == 5 && !chosen_words.has(word)) {
+                valid_words.push(word.toUpperCase());
+            }
+        });
+        let index = Math.floor(Math.random() * valid_words.length);
+        chosen_words.add(valid_words[index]);
+    }
+    words = [...chosen_words];
+    document.getElementById('word5a').value = words[0];
+    document.getElementById('word5b').value = words[1];
+    document.getElementById('word5c').value = words[2];
+    document.getElementById('word5d').value = words[3];
+    document.getElementById('word5e').value = words[4];
+    document.getElementById('word5f').value = words[5];
+    document.getElementById('word5g').value = words[6];
+    document.getElementById('word5h').value = words[7];
+    document.getElementById('word5i').value = words[8];
+    document.getElementById('word5j').value = words[9];
+    document.getElementById('word5k').value = words[10];
+    document.getElementById('word5l').value = words[11];
+    document.getElementById('word5m').value = words[12];
+    document.getElementById('word5n').value = words[13];
+    document.getElementById('word5o').value = words[14];
+    document.getElementById('word5p').value = words[15];
+    // Randomize 6-letter words
+    chosen_words = new Set();
+    while (chosen_words.size < 16) {
+        let valid_words = [];
+        wordlist.forEach((word) => {
+            if (word.length == 6 && !chosen_words.has(word)) {
+                valid_words.push(word.toUpperCase());
+            }
+        });
+        let index = Math.floor(Math.random() * valid_words.length);
+        chosen_words.add(valid_words[index]);
+    }
+    words = [...chosen_words];
+    document.getElementById('word6a').value = words[0];
+    document.getElementById('word6b').value = words[1];
+    document.getElementById('word6c').value = words[2];
+    document.getElementById('word6d').value = words[3];
+    document.getElementById('word6e').value = words[4];
+    document.getElementById('word6f').value = words[5];
+    document.getElementById('word6g').value = words[6];
+    document.getElementById('word6h').value = words[7];
+    document.getElementById('word6i').value = words[8];
+    document.getElementById('word6j').value = words[9];
+    document.getElementById('word6k').value = words[10];
+    document.getElementById('word6l').value = words[11];
+    document.getElementById('word6m').value = words[12];
+    document.getElementById('word6n').value = words[13];
+    document.getElementById('word6o').value = words[14];
+    document.getElementById('word6p').value = words[15];
+};
+
+document.getElementById('bin_file').addEventListener('change', refresh);
+document.getElementById('randomize_wordlist').addEventListener('click', randomize);
