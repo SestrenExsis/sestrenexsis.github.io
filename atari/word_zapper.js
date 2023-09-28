@@ -384,95 +384,118 @@ function refresh() {
     reader.readAsArrayBuffer(file);
 };
 
+function generate(seed) {
+    // console.log('generate(' + seed + ')');
+    let generator_rng = new Math.seedrandom(seed);
+    let result = [];
+    let chars_used = new Set();
+    let word_sizes = [4, 5, 6];
+    word_sizes.forEach((word_size) => {
+        let chosen_words = new Set();
+        while (chosen_words.size < 16) {
+            let valid_words = [];
+            wordlist.forEach((word) => {
+                word = word.toUpperCase();
+                let new_chars_used = new Set(chars_used);
+                if ((word.length == word_size) && (!chosen_words.has(word))) {
+                    for (let i = 0; i < word.length; i++) {
+                        let char = word.charAt(i);
+                        new_chars_used.add(char);
+                    }
+                    if (new_chars_used.size <= 16) {
+                        valid_words.push(word);
+                    }
+                }
+            });
+            if (chosen_words.size + valid_words.length < 16) {
+                break;
+            }
+            let index = Math.floor(generator_rng() * valid_words.length);
+            let chosen_word = valid_words[index];
+            chosen_words.add(chosen_word);
+            for (let i = 0; i < chosen_word.length; i++) {
+                let char = chosen_word.charAt(i);
+                chars_used.add(char);
+            }
+        }
+        result.push(...chosen_words);
+    })
+    return result;
+}
 
 function randomize() {
-    // Randomize 4-letter words
-    let chosen_words = new Set();
-    while (chosen_words.size < 16) {
-        let valid_words = [];
-        wordlist.forEach((word) => {
-            if (word.length == 4 && !chosen_words.has(word)) {
-                valid_words.push(word.toUpperCase());
+    let seed = Math.random();
+    let randomizer_rng = new Math.seedrandom(seed);
+    let words = [];
+    let attempts = 0;
+    while (true) {
+        attempts += 1;
+        words = generate(randomizer_rng());
+        if (words.length != 48) {
+            continue;
+        }
+        // Verify character bank is comprised of no more than 16 characters
+        let chars_used = new Set();
+        words.forEach((word) => {
+            for (let i = 0; i < word.length; i++) {
+                let char = word.charAt(i);
+                chars_used.add(char);
             }
         });
-        let index = Math.floor(Math.random() * valid_words.length);
-        chosen_words.add(valid_words[index]);
+        if (chars_used.size > 16) {
+            continue;
+        }
+        break;
     }
-    let words = [...chosen_words];
-    document.getElementById('word4a').value = words[0];
-    document.getElementById('word4b').value = words[1];
-    document.getElementById('word4c').value = words[2];
-    document.getElementById('word4d').value = words[3];
-    document.getElementById('word4e').value = words[4];
-    document.getElementById('word4f').value = words[5];
-    document.getElementById('word4g').value = words[6];
-    document.getElementById('word4h').value = words[7];
-    document.getElementById('word4i').value = words[8];
-    document.getElementById('word4j').value = words[9];
-    document.getElementById('word4k').value = words[10];
-    document.getElementById('word4l').value = words[11];
-    document.getElementById('word4m').value = words[12];
-    document.getElementById('word4n').value = words[13];
-    document.getElementById('word4o').value = words[14];
-    document.getElementById('word4p').value = words[15];
-    // Randomize 5-letter words
-    chosen_words = new Set();
-    while (chosen_words.size < 16) {
-        let valid_words = [];
-        wordlist.forEach((word) => {
-            if (word.length == 5 && !chosen_words.has(word)) {
-                valid_words.push(word.toUpperCase());
-            }
-        });
-        let index = Math.floor(Math.random() * valid_words.length);
-        chosen_words.add(valid_words[index]);
-    }
-    words = [...chosen_words];
-    document.getElementById('word5a').value = words[0];
-    document.getElementById('word5b').value = words[1];
-    document.getElementById('word5c').value = words[2];
-    document.getElementById('word5d').value = words[3];
-    document.getElementById('word5e').value = words[4];
-    document.getElementById('word5f').value = words[5];
-    document.getElementById('word5g').value = words[6];
-    document.getElementById('word5h').value = words[7];
-    document.getElementById('word5i').value = words[8];
-    document.getElementById('word5j').value = words[9];
-    document.getElementById('word5k').value = words[10];
-    document.getElementById('word5l').value = words[11];
-    document.getElementById('word5m').value = words[12];
-    document.getElementById('word5n').value = words[13];
-    document.getElementById('word5o').value = words[14];
-    document.getElementById('word5p').value = words[15];
-    // Randomize 6-letter words
-    chosen_words = new Set();
-    while (chosen_words.size < 16) {
-        let valid_words = [];
-        wordlist.forEach((word) => {
-            if (word.length == 6 && !chosen_words.has(word)) {
-                valid_words.push(word.toUpperCase());
-            }
-        });
-        let index = Math.floor(Math.random() * valid_words.length);
-        chosen_words.add(valid_words[index]);
-    }
-    words = [...chosen_words];
-    document.getElementById('word6a').value = words[0];
-    document.getElementById('word6b').value = words[1];
-    document.getElementById('word6c').value = words[2];
-    document.getElementById('word6d').value = words[3];
-    document.getElementById('word6e').value = words[4];
-    document.getElementById('word6f').value = words[5];
-    document.getElementById('word6g').value = words[6];
-    document.getElementById('word6h').value = words[7];
-    document.getElementById('word6i').value = words[8];
-    document.getElementById('word6j').value = words[9];
-    document.getElementById('word6k').value = words[10];
-    document.getElementById('word6l').value = words[11];
-    document.getElementById('word6m').value = words[12];
-    document.getElementById('word6n').value = words[13];
-    document.getElementById('word6o').value = words[14];
-    document.getElementById('word6p').value = words[15];
+    console.log(attempts);
+    document.getElementById('word4a').value = words[0 * 16 + 0];
+    document.getElementById('word4b').value = words[0 * 16 + 1];
+    document.getElementById('word4c').value = words[0 * 16 + 2];
+    document.getElementById('word4d').value = words[0 * 16 + 3];
+    document.getElementById('word4e').value = words[0 * 16 + 4];
+    document.getElementById('word4f').value = words[0 * 16 + 5];
+    document.getElementById('word4g').value = words[0 * 16 + 6];
+    document.getElementById('word4h').value = words[0 * 16 + 7];
+    document.getElementById('word4i').value = words[0 * 16 + 8];
+    document.getElementById('word4j').value = words[0 * 16 + 9];
+    document.getElementById('word4k').value = words[0 * 16 + 10];
+    document.getElementById('word4l').value = words[0 * 16 + 11];
+    document.getElementById('word4m').value = words[0 * 16 + 12];
+    document.getElementById('word4n').value = words[0 * 16 + 13];
+    document.getElementById('word4o').value = words[0 * 16 + 14];
+    document.getElementById('word4p').value = words[0 * 16 + 15];
+    document.getElementById('word5a').value = words[1 * 16 + 0];
+    document.getElementById('word5b').value = words[1 * 16 + 1];
+    document.getElementById('word5c').value = words[1 * 16 + 2];
+    document.getElementById('word5d').value = words[1 * 16 + 3];
+    document.getElementById('word5e').value = words[1 * 16 + 4];
+    document.getElementById('word5f').value = words[1 * 16 + 5];
+    document.getElementById('word5g').value = words[1 * 16 + 6];
+    document.getElementById('word5h').value = words[1 * 16 + 7];
+    document.getElementById('word5i').value = words[1 * 16 + 8];
+    document.getElementById('word5j').value = words[1 * 16 + 9];
+    document.getElementById('word5k').value = words[1 * 16 + 10];
+    document.getElementById('word5l').value = words[1 * 16 + 11];
+    document.getElementById('word5m').value = words[1 * 16 + 12];
+    document.getElementById('word5n').value = words[1 * 16 + 13];
+    document.getElementById('word5o').value = words[1 * 16 + 14];
+    document.getElementById('word5p').value = words[1 * 16 + 15];
+    document.getElementById('word6a').value = words[2 * 16 + 0];
+    document.getElementById('word6b').value = words[2 * 16 + 1];
+    document.getElementById('word6c').value = words[2 * 16 + 2];
+    document.getElementById('word6d').value = words[2 * 16 + 3];
+    document.getElementById('word6e').value = words[2 * 16 + 4];
+    document.getElementById('word6f').value = words[2 * 16 + 5];
+    document.getElementById('word6g').value = words[2 * 16 + 6];
+    document.getElementById('word6h').value = words[2 * 16 + 7];
+    document.getElementById('word6i').value = words[2 * 16 + 8];
+    document.getElementById('word6j').value = words[2 * 16 + 9];
+    document.getElementById('word6k').value = words[2 * 16 + 10];
+    document.getElementById('word6l').value = words[2 * 16 + 11];
+    document.getElementById('word6m').value = words[2 * 16 + 12];
+    document.getElementById('word6n').value = words[2 * 16 + 13];
+    document.getElementById('word6o').value = words[2 * 16 + 14];
+    document.getElementById('word6p').value = words[2 * 16 + 15];
 };
 
 document.getElementById('bin_file').addEventListener('change', refresh);
