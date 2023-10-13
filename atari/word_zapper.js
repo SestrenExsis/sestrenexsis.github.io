@@ -385,7 +385,6 @@ function refresh() {
 };
 
 function generate(seed) {
-    // console.log('generate(' + seed + ')');
     let generator_rng = new Math.seedrandom(seed);
     let result = [];
     let chars_used = new Set();
@@ -424,8 +423,13 @@ function generate(seed) {
 }
 
 function randomize() {
-    let seed = Math.random();
-    let randomizer_rng = new Math.seedrandom(seed);
+    let given_seed = document.getElementById('seed').value;
+    if (given_seed.length < 1) {
+        let seed = Math.floor(Number.MAX_SAFE_INTEGER * Math.random());
+        document.getElementById('seed').value = seed;
+    }
+    given_seed = document.getElementById('seed').value
+    let randomizer_rng = new Math.seedrandom(given_seed);
     let words = [];
     let attempts = 0;
     while (true) {
