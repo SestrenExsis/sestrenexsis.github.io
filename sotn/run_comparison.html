@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Run Comparison</title>
+    </head>
+    <body>
+        <div>
+            <div>
+                <input type="file" name="file[]" id="videoFileA"
+                    class="file_multi_video"
+                    onchange='loadVideo("videoPlayerA", "videoFileA");'
+                    accept="video/*,video/x-matroska">
+            </div>
+            <div>
+                <video id="videoPlayerA" width="400" controls></video>
+            </div>
+        </div>
+        <div>
+            <div>
+                <input type="file" name="file[]" id="videoFileB"
+                    class="file_multi_video"
+                    onchange='loadVideo("videoPlayerB", "videoFileB");'
+                    accept="video/*,video/x-matroska">
+            </div>
+            <div>
+                <video id="videoPlayerB" width="400" controls></video>
+            </div>
+        </div>
+        <button id="jump">Jump to 60 seconds on both videos</button>
+    </body>
+    <script type="text/javascript" src="run_comparison.js"></script>
+</html>
