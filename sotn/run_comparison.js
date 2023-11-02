@@ -1,31 +1,95 @@
 
-var actionButton = document.getElementById('actionButton');
-actionButton.addEventListener("click", function (event) {
+const metadata = {
+    "db_1632": {
+        "name": "Alucard Any% NSC 01 - 16-32-500 - Dr4gonBlitz.mp4",
+        "window": {
+            "left": 0,
+            "top": 0,
+            "width": 954,
+            "height": 720,
+        },
+        "min_threshold": 1,
+        "max_threshold": 252,
+        "timeline": [
+            6000,
+            12500,
+            54000,
+        ]
+    },
+    "db_1653": {
+        "name": "Alucard Any% NSC Marathon-Safe - 16-53-710 - Dr4gonBlitz.mp4",
+        "window": {
+            "left": 4,
+            "top": 58,
+            "width": 954,
+            "height": 624,
+        },
+        "min_threshold": 1,
+        "max_threshold": 252,
+        "timeline": [
+            66000,
+            73000,
+            112500,
+        ]
+    },
+}
+// https://developer.mozilla.org/en-US/docs/Web/API/ImageData
+// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/getImageData
+
+var timelineIndex = 0;
+
+var playOrPause = document.getElementById('playOrPause');
+playOrPause.addEventListener("click", function (event) {
     event.preventDefault();
-    crop("canvasA", "videoPlayerA", 0, 0, 954, 720);
-    crop("canvasB", "videoPlayerB", 4, 58, 954, 624);
-    // jump(60);
+    toggle("videoPlayerA");
+    toggle("videoPlayerB");
 }, false);
 
-function jump(time) {
-    console.log("jump");
-    let videoPlayerA = document.getElementById("videoPlayerA");
-    let videoFileA = document.getElementById("videoFileA");
-    console.log('videoFileA: ', videoFileA.files[0].name);
-    let videoPlayerB = document.getElementById("videoPlayerB");
-    let videoFileB = document.getElementById("videoFileB");
-    console.log('videoFileB: ', videoFileB.files[0].name);
-    videoPlayerA.play();
-    videoPlayerA.pause();
-    videoPlayerA.currentTime = time;
-    videoPlayerA.play();
-    videoPlayerB.play();
-    videoPlayerB.pause();
-    videoPlayerB.currentTime = time;
-    videoPlayerB.play();
+var nextScene = document.getElementById('nextScene');
+nextScene.addEventListener("click", function (event) {
+    event.preventDefault();
+    crop("canvasA", "videoPlayerA", metadata.db_1632.window);
+    jump("videoPlayerA", metadata.db_1632.timeline[timelineIndex]);
+    crop("canvasB", "videoPlayerB", metadata.db_1653.window);
+    jump("videoPlayerB", metadata.db_1653.timeline[timelineIndex]);
+    timelineIndex += 1;
+    if (timelineIndex >= 3) {
+        timelineIndex = 0;
+    }
+}, false);
+
+var nextFrame = document.getElementById('nextFrame');
+nextFrame.addEventListener("click", function (event) {
+    event.preventDefault();
+    advance("videoPlayerA", 17);
+    crop("canvasA", "videoPlayerA", metadata.db_1632.window);
+    advance("videoPlayerB", 17);
+    crop("canvasB", "videoPlayerB", metadata.db_1653.window);
+}, false);
+
+function toggle(videoPlayerId) {
+    let videoPlayer = document.getElementById(videoPlayerId);
+    if (videoPlayer.paused || videoPlayer.ended) {
+        videoPlayer.play();
+    }
+    else {
+        videoPlayer.pause();
+    }
 }
 
-function crop(canvasId, videoPlayerId, left, top, width, height) {
+function jump(videoPlayerId, time_in_ms) {
+    let videoPlayer = document.getElementById(videoPlayerId);
+    videoPlayer.play();
+    videoPlayer.pause();
+    videoPlayer.currentTime = time_in_ms / 1000;
+}
+
+function advance(videoPlayerId, time_in_ms) {
+    let videoPlayer = document.getElementById(videoPlayerId);
+    videoPlayer.currentTime += time_in_ms / 1000;
+}
+
+function crop(canvasId, videoPlayerId, window) {
     console.log("crop" + canvasId);
     let canvas = document.getElementById(canvasId);
     let context = canvas.getContext("2d");
@@ -34,7 +98,7 @@ function crop(canvasId, videoPlayerId, left, top, width, height) {
     canvas.height = 194;
     context.drawImage(
         videoPlayer,
-        left, top, width, height,
+        window.left, window.top, window.width, window.height,
         0, 0, 256, 194,
     );
     let frame = context.getImageData(0, 0, 256, 194);
