@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title>Run Analysis</title>
+    </head>
+    <body>
+        <div>
+            <div>
+                <input type="file" name="file[]" id="videoFileA"
+                    class="file_multi_video"
+                    onchange='loadVideo("videoPlayerA", "videoFileA");'
+                    accept="video/*,video/x-matroska">
+            </div>
+            <div>
+                <video id="videoPlayerA" width="800" controls></video>
+            </div>
+            <button id="previous_frame" onclick='nudge_timeline(-17)'>
+                Previous frame
+            </button>
+            <button id="next_frame" onclick='nudge_timeline(17)'>
+                Next frame
+            </button>
+        </div>
+        <div>
+            <h3>Crop</h3>
+            <label for="window_left" >Left:</label>
+            <input id="window_left" type="number" value="0" min="0" max="32767" onchange='update_frame()' />
+            <label for="window_top">Top:</label>
+            <input id="window_top" type="number" value="0" min="0" max="32767" onchange='update_frame()' />
+            <label for="window_width">Width:</label>
+            <input id="window_width" type="number" value="954" min="0" max="32767" onchange='update_frame()' />
+            <label for="window_height">Height:</label>
+            <input id="window_height" type="number" value="720" min="0" max="32767" onchange='update_frame()' />
+        </div>
+        <div>
+            <h3>Black screen</h3>
+            <label for="black_screen_red" >Red:</label>
+            <input id="black_screen_red" type="number" value="0" min="0" max="255" onchange='update_frame()' />
+            <label for="black_screen_green">Green:</label>
+            <input id="black_screen_green" type="number" value="0" min="0" max="255" onchange='update_frame()' />
+            <label for="black_screen_blue">Blue:</label>
+            <input id="black_screen_blue" type="number" value="0" min="0" max="255" onchange='update_frame()' />
+            <button id="update_black_screen" onclick='calibrate("black_screen")'>
+                Calibrate black screen
+            </button>
+        </div>
+        <div>
+            <h3>White screen</h3>
+            <label for="white_screen_red" >Red:</label>
+            <input id="white_screen_red" type="number" value="0" min="0" max="255" onchange='update_frame()' />
+            <label for="white_screen_green">Green:</label>
+            <input id="white_screen_green" type="number" value="0" min="0" max="255" onchange='update_frame()' />
+            <label for="white_screen_blue">Blue:</label>
+            <input id="white_screen_blue" type="number" value="0" min="0" max="255" onchange='update_frame()' />
+            <button id="update_black_screen" onclick='calibrate("white_screen")'>
+                Calibrate white screen
+            </button>
+        </div>
+        <div>
+            <h3>Frame</h3>
+            <div>
+                <canvas id="canvasA" width="256" height="194" style="outline: magenta 1px solid;"></canvas>
+            </div>
+            <div>
+                <button id="update_frame" onclick='update_frame()'>
+                    Update frame
+                </button>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="run_analysis.js"></script>
+</html>
