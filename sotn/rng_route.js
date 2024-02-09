@@ -189,6 +189,7 @@ function refresh(update_url) {
     rng.push(8 * short_candles);
     rng.push(10 * tall_candles);
     rng.push(80);
+    console.log("RNG calls prior to Dracula's first spawn: " + rng.calls);
     // Determine Dracula spawn position
     let dracula_spawn = (0x7 & rng.next());
     let dracula_spawn_label = "ERROR!";
@@ -232,7 +233,7 @@ function refresh(update_url) {
         warg.update()
     }
     /* ======= END OF SIMULATION ======= */
-    console.log(rng.calls);
+    // console.log(rng.calls);
 }
 
 inputs.forEach((input) => {
