@@ -3,25 +3,32 @@ var url_parameters = new URLSearchParams(window.location.search);
 var MAX_SEED = 0xFFFFFFFF;
 var inputs = [{
         id: 'nice_rng_index',
+        parameter: 'aa',
         default: 0,
     }, {
         id: 'candles',
+        parameter: 'ab',
         default: 0,
     }, {
         id: 'vases',
+        parameter: 'ac',
         default: 0,
     }, {
         id: 'short_candles',
+        parameter: 'ad',
         default: 0,
     }, {
         id: 'tall_candles',
+        parameter: 'ae',
         default: 0,
-    }, {
-        id: 'move_frames',
-        default: 60,
-    }, {
-        id: 'warg_death_frames',
-        default: 30,
+    // }, {
+    //     id: 'move_frames',
+    //     parameter: 'af',
+    //     default: 60,
+    // }, {
+    //     id: 'warg_death_frames',
+    //     parameter: 'ag',
+    //     default: 30,
     },
 ]
 
@@ -150,36 +157,43 @@ function refresh(update_url) {
     rng.push(nice_rng_index);
     rng.calls = 0;
     document.getElementById('nice_rng_seed').value = hex(rng.seed);
+
     // Clamp input values
     let candles = document.getElementById('candles').value;
     candles = Math.max(candles, 0);
-    candles = Math.min(candles, 999);
+    candles = Math.min(candles, 255);
     document.getElementById('candles').value = candles;
+
     let vases = document.getElementById('vases').value;
     vases = Math.max(vases, 0);
-    vases = Math.min(vases, 999);
+    vases = Math.min(vases, 255);
     document.getElementById('vases').value = vases;
+
     let short_candles = document.getElementById('short_candles').value;
     short_candles = Math.max(short_candles, 0);
     short_candles = Math.min(short_candles, 2);
     document.getElementById('short_candles').value = short_candles;
+
     let tall_candles = document.getElementById('tall_candles').value;
     tall_candles = Math.max(tall_candles, 0);
     tall_candles = Math.min(tall_candles, 2);
     document.getElementById('tall_candles').value = tall_candles;
+
     let move_frames = document.getElementById('move_frames').value;
     move_frames = Math.max(move_frames, 0);
     move_frames = Math.min(move_frames, 999);
     document.getElementById('move_frames').value = move_frames;
+
     let warg_death_frames = document.getElementById('warg_death_frames').value;
     warg_death_frames = Math.max(warg_death_frames, 0);
     warg_death_frames = Math.min(warg_death_frames, 999);
     document.getElementById('warg_death_frames').value = warg_death_frames;
+
     // Update URL if requested
     if (update_url) {
         const url = new URL(window.location);
         inputs.forEach((input) => {
-            url.searchParams.set(input.id, document.getElementById(input.id).value);
+            url.searchParams.set(input.parameter, document.getElementById(input.id).value);
         })
         history.replaceState({}, "", url);
     }
@@ -237,11 +251,11 @@ function refresh(update_url) {
 }
 
 inputs.forEach((input) => {
-    if (url_parameters.get(input.id) == null)
+    if (url_parameters.get(input.parameter) == null)
     {
-        url_parameters.set(input.id, input.default);
+        url_parameters.set(input.parameter, input.default);
     }
-    document.getElementById(input.id).value = url_parameters.get(input.id);
+    document.getElementById(input.id).value = url_parameters.get(input.parameter);
     let element = document.getElementById(input.id);
     element.addEventListener('input', function() {
         refresh(true);
