@@ -16,23 +16,68 @@
             </form>
         </div>
         <div id="prologue">
-            <h2>Prologue</h2>
-            <h3>Dracula's Spawn Location</h3>
-            <p><strong>NOTE:</strong> Input how many candles and vases are broken before Dracula's first teleport.</p>
+            <h2>Dracula Spawn RNG</h2>
+            <h3>Prologue</h3>
+            <p><strong>Breakables</strong> are the only source of RNG prior to Dracula's first spawn.</p>
+            <p><strong>NOTE:</strong> How many candles and vases are broken before entering the throne room.</p>
             <form>
-                <label for="short_candles">Short candelabras:</label><br>
-                <input id="short_candles" type="number" style="font-family: monospace;" 
-                    value="0" min="0" max="255" /><br>
-                <label for="tall_candles">Tall candelabras:</label><br>
-                <input id="tall_candles" type="number" style="font-family: monospace;" 
-                    value="0" min="0" max="255" /><br>
+                <label for="candles">Candles:</label><br>
+                <input id="candles" type="number" style="font-family: monospace;" value="0" min="0" max="255" /><br>
                 <label for="vases">Vases:</label><br>
-                <input id="vases" type="number" style="font-family: monospace;" 
-                    value="0" min="0" max="255" /><br>
-                <label for="dracula_spawn">Dracula Spawn Index:</label><br>
-                <input id="dracula_spawn" type="text" style="font-family: monospace;"
-                    value="Unknown" size="40" disabled />
+                <input id="vases" type="number" style="font-family: monospace;" value="0" min="0" max="255" /><br>
             </form>
+            <p><strong>NOTE:</strong> How many of the short and tall candelabras are broken before Dracula's first teleport</p>
+            <form>
+                <label for="short_candles">Short candles:</label><br>
+                <input id="short_candles" type="number" style="font-family: monospace;" value="0" min="0" max="2" /><br>
+                <label for="tall_candles">Tall candles:</label><br>
+                <input id="tall_candles" type="number" style="font-family: monospace;" value="0" min="0" max="2" /><br>
+            </form>
+            <h3>Dracula's Spawn Location</h3>
+            <label for="dracula_spawn">Dracula Spawn Index:</label><br>
+            <input id="dracula_spawn" type="text" style="font-family: monospace;" value="UNKNOWN" size="40" disabled />
+        </div>
+        <div id="entrance" hidden="true">
+            <h2>Spittlebone RNG</h2>
+            <h3>Drawbridge Cutscene</h3>
+            <p id="calls_before_drawbridge_cutscene"><em>X RNG calls made prior to this room</em></p>
+            <p>This room contains time-unstable sources of RNG, so <strong>how long you spend in this room will influence your RNG</strong>.</p>
+            <p>Since it is happening during a fixed duration cutscene, it is deterministic, but entirely out of the player's control.</p>
+            <p id="calls_during_drawbridge_cutscene"><em>+X RNG calls made in this room</em></p>
+            <h3>Entrance</h3>
+            <p>This room contains time-unstable sources of RNG, so <strong>how long you spend in this room will influence your RNG</strong>.</p>
+            <p>An input-unstable source of RNG comes from the <strong>Warg's death animation</strong>, assuming the player tries to leave the room quickly, before it has finished.</p>
+            <form>
+                <label for="move_frames">Frames between first player input and start of Warg death:</label><br>
+                <input id="move_frames" type="number" style="font-family: monospace;" value="60" min="60" max="255" /><br>
+                <label for="warg_death_frames">Frames between start of Warg death and first darkened frame:</label><br>
+                <input id="warg_death_frames" type="number" style="font-family: monospace;" value="30" min="30" max="255" /><br>
+            </form>
+            <h3>Zombie Hallway</h3>
+            <p>This room contains time-unstable sources of RNG, so <strong>how long you spend in this room will influence your RNG</strong>.</p>
+            <p>TODO(sestren): Lightning storm RNG</p>
+            <p>TODO(sestren): Zombie spawner RNG</p>
+            <h3>Merman Room</h3>
+            <p>Provided you don't wake the Mermen, there are no unstable sources of RNG in this room.</p>
+            <p>TODO(sestren): Waking/killing Bat RNG</p>
+            <p>TODO(sestren): Breaking blocks RNG</p>
+            <h3>Warg Hallway</h3>
+            <p>This room contains time-unstable sources of RNG, so <strong>how long you spend in this room will influence your RNG</strong>.</p>
+            <p>TODO(sestren): Lightning storm RNG</p>
+            <h3>Death's Meeting Room</h3>
+            <p>Provided you skip Death, there are no sources of RNG in this room.</p>
+            <h3>Death's Stairwell</h3>
+            <p><strong>Breakables</strong> are the only source of RNG in this room.</p>
+            <p>TODO(sestren): Candle RNG</p>
+            <h3>Softlock Gap</h3>
+            <p>This room contains time-unstable sources of RNG, so <strong>how long you spend in this room will influence your RNG</strong>.</p>
+            <p>TODO(sestren): Lightning storm RNG</p>
+            <h3>Cube of Zoe Room</h3>
+            <h3>Alchemy Lab Entrance</h3>
+            <h3>Pressure Plate Room</h3>
+            <h3>Zig Zag Stairs 1</h3>
+            <h3>Zig Zag Stairs 2</h3>
+            <h3>Spittlebone Room 1</h3>
         </div>
         <script type="text/javascript" src="rng_route.js"></script>
     </body>
