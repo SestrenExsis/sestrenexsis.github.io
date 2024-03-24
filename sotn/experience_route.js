@@ -314,7 +314,7 @@ class Player {
             if (monster.level < this.level) {
                 let gap = this.level - monster.level;
                 for (let i = 0; i < gap; i++) {
-                    xp_gain = Math.floor(xp_gain / 3);
+                    xp_gain = Math.floor((xp_gain * 2) / 3);
                 }
                 if (xp_gain < 1) {
                     xp_gain = 1;
