@@ -428,6 +428,10 @@ function refresh(update_url) {
             }
         }
     });
+    document.getElementById("player_xp").value = player.xp
+    document.getElementById("player_level").value = player.level
+    document.getElementById("player_xp_to_next_level").value = Player.levels.at(player.level + 1) - player.xp
+    document.getElementById("player_level_up_animations").value = player.level_up_animations
     console.log("xp: " + player.xp + ", level: " + player.level + ", level-up animations: " + player.level_up_animations);
     // Update URL if requested
     if (update_url) {
