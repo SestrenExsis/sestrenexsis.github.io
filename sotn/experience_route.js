@@ -290,7 +290,7 @@ class Player {
     ];
     constructor() {
         this.xp = 0;
-        this.level_up_animations = 0;
+        this.level_up_animations = [];
     }
 
     get level() {
@@ -306,7 +306,8 @@ class Player {
         return result;
     }
 
-    kill(monsters) {
+    kill(description, monsters) {
+        let prev_xp = this.xp;
         let prev_level = this.level;
         let total_xp_gains = 0;
         monsters.forEach((monster) => {
@@ -333,106 +334,135 @@ class Player {
             total_xp_gains += xp_gain;
         });
         this.xp += total_xp_gains;
-        this.level_up_animations += (((this.level - prev_level) > 0) ? 1 : 0);
+        if (this.level > prev_level) {
+            let xp_under = Math.max(0, Player.levels.at(prev_level + 1) - prev_xp - 1);
+            let xp_over = Math.max(0, this.xp - Player.levels.at(this.level));
+            this.level_up_animations.push(description + " [+" + xp_under + ", -" + xp_over + "]");
+            let levels_gained = this.level - prev_level;
+            return " [" + levels_gained + " level(s) gained]";
+        }
+        else {
+            return "";
+        }
     }
 }
 
 class Monster {
-    constructor(level, base_xp) {
+    constructor(name, level, base_xp) {
+        this.name = name;
         this.level = level;
         this.base_xp = base_xp;
     }
 }
 
 let monsters = {
-    "Warg": new Monster(2, 10),
-    "Zombie": new Monster(1, 5),
-    "Bat": new Monster(1, 10),
-    "Bone Scimitar": new Monster(3, 15),
-    "Skeleton": new Monster(2, 10),
-    "Spittle Bone": new Monster(3, 20),
-    "Axe Knight (Green)": new Monster(4, 10),
-    "Slogra": new Monster(6, 200),
-    "Gaibon": new Monster(6, 200),
-    "Bloody Zombie": new Monster(4, 15),
-    "Flea Man": new Monster(7, 17),
-    "Ouija Table": new Monster(5, 20),
-    "Slinger": new Monster(4, 10),
-    "Diplocephalus": new Monster(7, 50),
-    "Stone Rose": new Monster(8, 60),
-    "Axe Knight (Blue)": new Monster(9, 50),
-    "Doppleganger10": new Monster(10, 500),
-    "Skeleton Ape": new Monster(10, 30),
-    "Spear Guard": new Monster(10, 70),
-    "Bone Archer": new Monster(10, 50),
-    "Bone Musket": new Monster(8, 20),
-    "Medusa Head (Green)": new Monster(7, 20),
-    "Medusa Head (Golden)": new Monster(8, 30),
-    "Sword Lord": new Monster(11, 80),
-    "Skelerang": new Monster(5, 15),
-    "Spectral Sword": new Monster(13, 80),
-    "Blade Soldier": new Monster(8, 20),
-    "Blade Master": new Monster(17, 80),
-    "Werewolf": new Monster(18, 300),
-    "Minotaurus": new Monster(35, 250),
-    "Spellbook": new Monster(10, 30),
-    "Corpseweed": new Monster(13, 100),
-    "Flea Armor": new Monster(16, 40),
-    "Dhuron": new Monster(12, 50),
-    "Lesser Demon": new Monster(20, 100),
-    "Ectoplasm": new Monster(11, 70),
-    "Harpy": new Monster(18, 70),
-    "Vandal Sword": new Monster(15, 100),
-    "Karasuman": new Monster(22, 1000),
-    "Tombstone": new Monster(25, 88),
-    "Balloon Pod": new Monster(29, 88),
-    "Black Panther": new Monster(35, 600),
-    "Medusa": new Monster(40, 2500),
-    "Sniper of Goth": new Monster(36, 200),
-    "Imp": new Monster(41, 66),
+    "Warg": new Monster("Warg", 2, 10),
+    "Zombie": new Monster("Zombie", 1, 5),
+    "Bat": new Monster("Bat", 1, 10),
+    "Bone Scimitar": new Monster("Bone Scimitar", 3, 15),
+    "Skeleton": new Monster("Skeleton", 2, 10),
+    "Spittle Bone": new Monster("Spittle Bone", 3, 20),
+    "Axe Knight (Green)": new Monster("Axe Knight (Green)", 4, 10),
+    "Slogra": new Monster("Slogra", 6, 200),
+    "Gaibon": new Monster("Gaibon", 6, 200),
+    "Bloody Zombie": new Monster("Bloody Zombie", 4, 15),
+    "Flea Man": new Monster("Flea Man", 7, 17),
+    "Ouija Table": new Monster("Ouija Table", 5, 20),
+    "Slinger": new Monster("Slinger", 4, 10),
+    "Diplocephalus": new Monster("Diplocephalus", 7, 50),
+    "Stone Rose": new Monster("Stone Rose", 8, 60),
+    "Axe Knight (Blue)": new Monster("Axe Knight (Blue)", 9, 50),
+    "Doppleganger10": new Monster("Doppleganger10", 10, 500),
+    "Skeleton Ape": new Monster("Skeleton Ape", 10, 30),
+    "Spear Guard": new Monster("Spear Guard", 10, 70),
+    "Bone Archer": new Monster("Bone Archer", 10, 50),
+    "Bone Musket": new Monster("Bone Musket", 8, 20),
+    "Medusa Head (Green)": new Monster("Medusa Head (Green)", 7, 20),
+    "Medusa Head (Golden)": new Monster("Medusa Head (Golden)", 8, 30),
+    "Sword Lord": new Monster("Sword Lord", 11, 80),
+    "Skelerang": new Monster("Skelerang", 5, 15),
+    "Spectral Sword": new Monster("Spectral Sword", 13, 80),
+    "Blade Soldier": new Monster("Blade Soldier", 8, 20),
+    "Blade Master": new Monster("Blade Master", 17, 80),
+    "Werewolf": new Monster("Werewolf", 18, 300),
+    "Minotaurus": new Monster("Minotaurus", 18, 400),
+    "Spellbook": new Monster("Spellbook", 10, 30),
+    "Corpseweed": new Monster("Corpseweed", 13, 100),
+    "Flea Armor": new Monster("Flea Armor", 16, 40),
+    "Dhuron": new Monster("Dhuron", 12, 50),
+    "Lesser Demon": new Monster("Lesser Demon", 20, 100),
+    "Ectoplasm": new Monster("Ectoplasm", 11, 70),
+    "Harpy": new Monster("Harpy", 18, 70),
+    "Vandal Sword": new Monster("Vandal Sword", 15, 100),
+    "Karasuman": new Monster("Karasuman", 22, 1000),
+    "Tombstone": new Monster("Tombstone", 25, 88),
+    "Balloon Pod": new Monster("Balloon Pod", 29, 88),
+    "Black Panther": new Monster("Black Panther", 35, 600),
+    "Medusa": new Monster("Medusa", 40, 2500),
+    "Sniper of Goth": new Monster("Sniper of Goth", 36, 200),
+    "Imp": new Monster("Imp", 41, 66),
 };
 
 function refresh(update_url) {
+    // Source: https://stackoverflow.com/questions/285522/find-html-label-associated-with-a-given-input
+    var labels = document.getElementsByTagName('label');
+    for (var i = 0; i < labels.length; i++) {
+        if (labels[i].htmlFor != '') {
+            var elem = document.getElementById(labels[i].htmlFor);
+            if (elem) {
+                elem.label = labels[i];
+            }
+        }
+    }
     let player = new Player();
     inputs.forEach((input_id) => {
         let element = document.getElementById(input_id);
+        if (element.label.innerHTML.endsWith(']')) {
+            element.label.innerHTML = element.label.innerHTML.slice(0, element.label.innerHTML.indexOf("["));
+        }
         if (element.checked) {
+            let message = "";
             if (element.value == "Slogra and Gaibon Double Kill") {
-                player.kill([
+                message += player.kill("Slogra and Gaibon", [
                     monsters["Slogra"],
                     monsters["Gaibon"],
                 ]);
             }
             else if (element.value == "No Slogra and Gaibon Double Kill") {
-                player.kill([monsters["Slogra"]]);
-                player.kill([monsters["Gaibon"]]);
+                message += player.kill("Slogra", [monsters["Slogra"]]);
+                message += player.kill("Gaibon", [monsters["Gaibon"]]);
             }
             else if (element.value == "Werewolf and Minotaurus Double Kill") {
-                player.kill([
+                message += player.kill("Werewolf and Minotaurus", [
                     monsters["Werewolf"],
                     monsters["Minotaurus"],
                 ]);
             }
             else if (element.value == "Kill Werewolf First") {
-                player.kill([monsters["Werewolf"]]);
-                player.kill([monsters["Minotaurus"]]);
+                message += player.kill("Werewolf", [monsters["Werewolf"]]);
+                message += player.kill("Minotaurus", [monsters["Minotaurus"]]);
             }
             else if (element.value == "Kill Minotaurus First") {
-                player.kill([monsters["Minotaurus"]]);
-                player.kill([monsters["Werewolf"]]);
+                message += player.kill("Minotaurus", [monsters["Minotaurus"]]);
+                message += player.kill("Werewolf", [monsters["Werewolf"]]);
             }
             else if (element.value.startsWith("Skip ")) {
                 // Skip this monster
             } else {
-                player.kill([monsters[element.value]]);
+                message += player.kill(element.value, [monsters[element.value]]);
             }
+            element.label.innerHTML += message;
         }
     });
-    document.getElementById("player_xp").value = player.xp
-    document.getElementById("player_level").value = player.level
-    document.getElementById("player_xp_to_next_level").value = Player.levels.at(player.level + 1) - player.xp
-    document.getElementById("player_level_up_animations").value = player.level_up_animations
-    console.log("xp: " + player.xp + ", level: " + player.level + ", level-up animations: " + player.level_up_animations);
+    document.getElementById("player_xp").value = player.xp;
+    document.getElementById("player_level").value = player.level;
+    document.getElementById("player_xp_to_next_level").value = Player.levels.at(player.level + 1) - player.xp;
+    document.getElementById("player_level_up_animations").value = player.level_up_animations.length;
+    // document.getElementById("player_level_ups").value = player.level_up_animations.at(1)
+    console.clear();
+    for (i = 0; i < player.level_up_animations.length; i++) {
+        console.log(player.level_up_animations.at(i));
+    }
     // Update URL if requested
     if (update_url) {
         const url = new URL(window.location);
