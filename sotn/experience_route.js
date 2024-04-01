@@ -339,7 +339,12 @@ class Player {
             let xp_over = Math.max(0, this.xp - Player.levels.at(this.level));
             this.level_up_animations.push(description + " [+" + xp_under + ", -" + xp_over + "]");
             let levels_gained = this.level - prev_level;
-            return " [" + levels_gained + " level(s) gained]";
+            let result = " +[";
+            for (let i = 0; i < levels_gained; i++) {
+                result += "&#x2B50;";
+            }
+            result += "]";
+            return result;
         }
         else {
             return "";
@@ -405,9 +410,9 @@ let monsters = {
 
 function refresh(update_url) {
     // Source: https://stackoverflow.com/questions/285522/find-html-label-associated-with-a-given-input
-    var labels = document.getElementsByTagName('label');
+    var labels = document.getElementsByTagName("label");
     for (var i = 0; i < labels.length; i++) {
-        if (labels[i].htmlFor != '') {
+        if (labels[i].htmlFor != "") {
             var elem = document.getElementById(labels[i].htmlFor);
             if (elem) {
                 elem.label = labels[i];
@@ -417,9 +422,8 @@ function refresh(update_url) {
     let player = new Player();
     inputs.forEach((input_id) => {
         let element = document.getElementById(input_id);
-        if (element.label.innerHTML.endsWith(']')) {
-            element.label.innerHTML = element.label.innerHTML.slice(0, element.label.innerHTML.indexOf("["));
-        }
+        if (element.label.innerHTML.endsWith("]")) {
+            element.label.innerHTML = element.label.innerHTML.slice(0, element.label.innerHTML.indexOf("+") - 1);        }
         if (element.checked) {
             let message = "";
             if (element.value == "Slogra and Gaibon Double Kill") {
@@ -458,7 +462,6 @@ function refresh(update_url) {
     document.getElementById("player_level").value = player.level;
     document.getElementById("player_xp_to_next_level").value = Player.levels.at(player.level + 1) - player.xp;
     document.getElementById("player_level_up_animations").value = player.level_up_animations.length;
-    // document.getElementById("player_level_ups").value = player.level_up_animations.at(1)
     console.clear();
     for (i = 0; i < player.level_up_animations.length; i++) {
         console.log(player.level_up_animations.at(i));
@@ -480,7 +483,7 @@ inputs.forEach((input_id) => {
     }
     document.getElementById(input_id).checked = url_parameters.get(input_id) == "1";
     let element = document.getElementById(input_id);
-    element.addEventListener('click', function() {
+    element.addEventListener("click", function() {
         refresh(true);
     });
 });
