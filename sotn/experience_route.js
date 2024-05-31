@@ -488,4 +488,18 @@ inputs.forEach((input_id) => {
     });
 });
 
+window.addEventListener('load', () => {
+    function collapse(event) {
+        if (event) {
+            event.stopPropagation();
+        }
+        var targetdiv = event.target.parentElement.getElementsByClassName("collapsible")[0];
+        targetdiv.hidden = !targetdiv.hidden;
+    }
+    var collapser = document.getElementsByClassName('collapser');
+    Array.from(collapser).forEach((collapse_tag) => {
+        collapse_tag.addEventListener('click', collapse);
+    });
+});
+
 refresh(false);
