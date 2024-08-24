@@ -74,7 +74,7 @@ rooms = [
         'id': "aa",
         'type': "checkbox",
         'monsters': [
-            'Warg',
+            'Warg*',
         ],
     },
     {
@@ -82,12 +82,12 @@ rooms = [
         'id': "ab",
         'type': "checkbox",
         'monsters': [
-            'Warg',
-            'Warg',
+            'Warg*',
+            'Warg*',
+            'Zombie*',
+            'Warg*',
             'Zombie',
-            'Warg',
-            'Zombie',
-            'Warg',
+            'Warg*',
             'Zombie',
         ],
     },
@@ -107,9 +107,9 @@ rooms = [
         'id': "ad",
         'type': "checkbox",
         'monsters': [
-            'Warg',
-            'Warg',
-            'Warg',
+            'Warg*',
+            'Warg*',
+            'Warg*',
         ],
     },
     {
@@ -117,8 +117,8 @@ rooms = [
         'id': "ae",
         'type': "checkbox",
         'monsters': [
-            'Bone Scimitar',
-            'Bone Scimitar',
+            'Bone Scimitar*',
+            'Bone Scimitar*',
         ],
     },
     {
@@ -126,9 +126,9 @@ rooms = [
         'id': "ba",
         'type': "checkbox",
         'monsters': [
-            'Bone Scimitar',
-            'Bone Scimitar',
-            'Skeleton',
+            'Bone Scimitar*',
+            'Bone Scimitar*',
+            'Skeleton*',
         ],
     },
     {
@@ -136,7 +136,7 @@ rooms = [
         'id': "bb",
         'type': "checkbox",
         'monsters': [
-            'Bone Scimitar',
+            'Bone Scimitar*',
             'Bone Scimitar',
             'Bone Scimitar',
         ],
@@ -155,7 +155,7 @@ rooms = [
         'type': "checkbox",
         'monsters': [
             'Spittle Bone',
-            'Axe Knight (Green)',
+            'Axe Knight (Green)*',
             'Axe Knight (Green)',
             'Spittle Bone',
             'Spittle Bone',
@@ -176,7 +176,7 @@ rooms = [
         'type': "radio",
         'monsters': [
             'Skip Slogra and Gaibon',
-            'Slogra and Gaibon Double Kill',
+            'Slogra and Gaibon Double Kill*',
             'No Slogra and Gaibon Double Kill',
         ],
     },
@@ -185,8 +185,8 @@ rooms = [
         'id': "bg",
         'type': "checkbox",
         'monsters': [
-            'Bone Scimitar',
-            'Bone Scimitar',
+            'Bone Scimitar*',
+            'Bone Scimitar*',
             'Bloody Zombie',
         ],
     },
@@ -195,10 +195,10 @@ rooms = [
         'id': "bh",
         'type': "checkbox",
         'monsters': [
-            'Bloody Zombie',
-            'Bloody Zombie',
-            'Bloody Zombie',
-            'Bloody Zombie',
+            'Bloody Zombie*',
+            'Bloody Zombie*',
+            'Bloody Zombie*',
+            'Bloody Zombie*',
         ],
     },
     {
@@ -209,7 +209,7 @@ rooms = [
             'Axe Knight (Green)',
             'Axe Knight (Green)',
             'Spittle Bone',
-            'Axe Knight (Green)',
+            'Axe Knight (Green)*',
         ],
     },
     {
@@ -217,9 +217,9 @@ rooms = [
         'id': "ca",
         'type': "checkbox",
         'monsters': [
-            'Axe Knight (Green)',
-            'Axe Knight (Green)',
-            'Axe Knight (Green)',
+            'Axe Knight (Green)*',
+            'Axe Knight (Green)*',
+            'Axe Knight (Green)*',
         ],
     },
     {
@@ -227,7 +227,7 @@ rooms = [
         'id': "cb",
         'type': "checkbox",
         'monsters': [
-            'Axe Knight (Green)',
+            'Axe Knight (Green)*',
         ],
     },
     {
@@ -235,8 +235,8 @@ rooms = [
         'id': "cc",
         'type': "checkbox",
         'monsters': [
-            'Flea Man',
-            'Flea Man',
+            'Flea Man*',
+            'Flea Man*',
         ],
     },
     {
@@ -244,7 +244,7 @@ rooms = [
         'id': "cd",
         'type': "checkbox",
         'monsters': [
-            'Flea Man',
+            'Flea Man*',
         ],
     },
     {
@@ -252,11 +252,11 @@ rooms = [
         'id': "ce",
         'type': "checkbox",
         'monsters': [
-            'Ouija Table',
-            'Ouija Table',
-            'Skeleton',
-            'Slinger',
-            'Skeleton',
+            'Ouija Table*',
+            'Ouija Table*',
+            'Skeleton*',
+            'Slinger*',
+            'Skeleton*',
         ],
     },
     {
@@ -264,9 +264,9 @@ rooms = [
         'id': "cf",
         'type': "checkbox",
         'monsters': [
-            'Skeleton',
-            'Slinger',
-            'Skeleton',
+            'Skeleton*',
+            'Slinger*',
+            'Skeleton*',
         ],
     },
     {
@@ -274,7 +274,7 @@ rooms = [
         'id': "cg",
         'type': "checkbox",
         'monsters': [
-            'Skeleton',
+            'Skeleton*',
         ],
     },
     {
@@ -282,11 +282,11 @@ rooms = [
         'id': "ch",
         'type': "checkbox",
         'monsters': [
-            'Diplocephalus',
-            'Diplocephalus',
-            'Diplocephalus',
-            'Stone Rose',
-            'Stone Rose',
+            'Diplocephalus*',
+            'Diplocephalus*',
+            'Diplocephalus*',
+            'Stone Rose*',
+            'Stone Rose*',
         ],
     },
     {
@@ -294,7 +294,7 @@ rooms = [
         'id': "da",
         'type': "checkbox",
         'monsters': [
-            'Axe Knight (Blue)',
+            'Axe Knight (Blue)*',
             'Axe Knight (Blue)',
         ],
     },
@@ -303,7 +303,7 @@ rooms = [
         'id': "db",
         'type': "checkbox",
         'monsters': [
-            'Doppleganger10',
+            'Doppleganger10*',
         ],
     },
     {
@@ -311,17 +311,17 @@ rooms = [
         'id': "dc",
         'type': "checkbox",
         'monsters': [
-            'Skeleton',
-            'Skeleton Ape',
-            'Spear Guard',
-            'Axe Knight (Blue)',
-            'Bone Archer',
-            'Bone Musket',
-            'Bone Musket',
-            'Bone Musket',
+            'Skeleton*',
+            'Skeleton Ape*',
+            'Spear Guard*',
+            'Axe Knight (Blue)*',
+            'Bone Archer*',
+            'Bone Musket*',
+            'Bone Musket*',
+            'Bone Musket*',
             'Medusa Head (Green)',
             'Medusa Head (Golden)',
-            'Sword Lord',
+            'Sword Lord*',
             'Medusa Head (Green)',
             'Medusa Head (Golden)',
         ],
@@ -331,11 +331,11 @@ rooms = [
         'id': "ea",
         'type': "checkbox",
         'monsters': [
-            'Stone Rose',
-            'Stone Rose',
-            'Diplocephalus',
-            'Diplocephalus',
-            'Diplocephalus',
+            'Stone Rose*',
+            'Stone Rose*',
+            'Diplocephalus*',
+            'Diplocephalus*',
+            'Diplocephalus*',
         ],
     },
     {
@@ -400,8 +400,8 @@ rooms = [
         'id': "ga",
         'type': "checkbox",
         'monsters': [
-            'Blade Soldier',
-            'Blade Soldier',
+            'Blade Soldier*',
+            'Blade Soldier*',
         ],
     },
     {
@@ -409,11 +409,11 @@ rooms = [
         'id': "gb",
         'type': "checkbox",
         'monsters': [
-            'Blade Soldier',
+            'Blade Soldier*',
             'Blade Master',
             'Blade Master',
             'Blade Master',
-            'Blade Soldier',
+            'Blade Soldier*',
         ],
     },
     {
@@ -422,7 +422,7 @@ rooms = [
         'type': "radio",
         'monsters': [
             'Skip Werewolf and Minotaurus',
-            'Kill Werewolf First',
+            'Kill Werewolf First*',
             'Kill Minotaurus First',
             'Werewolf and Minotaurus Double Kill',
         ],
@@ -450,10 +450,10 @@ rooms = [
         'monsters': [
             'Flea Armor',
             'Flea Man',
-            'Dhuron',
+            'Dhuron*',
             'Flea Armor',
             'Flea Man',
-            'Dhuron',
+            'Dhuron*',
             'Flea Armor',
             'Flea Man',
             'Dhuron',
@@ -468,9 +468,9 @@ rooms = [
         'monsters': [
             'Flea Armor',
             'Flea Man',
-            'Flea Armor',
+            'Flea Armor*',
             'Flea Man',
-            'Lesser Demon',
+            'Lesser Demon*',
         ],
     },
     {
@@ -499,7 +499,7 @@ rooms = [
         ],
     },
     {
-        'name': "Clock Tower - Strange Wall Room",
+        'name': "Clock Tower - Funny Wall Room",
         'id': "ib",
         'type': "checkbox",
         'monsters': [
@@ -514,7 +514,7 @@ rooms = [
         'id': "ic",
         'type': "checkbox",
         'monsters': [
-            'Karasuman',
+            'Karasuman*',
         ],
     },
     {
@@ -522,11 +522,11 @@ rooms = [
         'id': "ja",
         'type': "checkbox",
         'monsters': [
-            'Tombstone',
-            'Tombstone',
-            'Tombstone',
-            'Tombstone',
-            'Tombstone',
+            'Tombstone*',
+            'Tombstone*',
+            'Tombstone*',
+            'Tombstone*',
+            'Tombstone*',
         ],
     },
     {
@@ -543,7 +543,7 @@ rooms = [
         'id': "kb",
         'type': "checkbox",
         'monsters': [
-            'Medusa',
+            'Medusa*',
         ],
     },
     {
@@ -599,24 +599,27 @@ rooms = [
 # id="aa00"
 # id="ab00" through "ab06"
 
+strong = ' style="font-weight: bold"'
+
 if __name__ == '__main__':
     html = []
-    html.append('<!DOCTYPE html>')
-    html.append('<html>')
-    html.append('    <body>')
-    html.append('        <form>')
     indent = 3 * '    '
+    html.append(f'{indent}<form>')
     for room in rooms:
-        html.append(f'{indent}<fieldset>')
+        html.append(f'{indent}    <fieldset>')
         room_name = room['name']
         room_id = room['id']
         input_type = room['type']
-        html.append(f'{indent}    <legend>{room_name}</legend>')
+        html.append(f'{indent}        <legend class="collapser">{room_name}</legend>')
+        html.append(f'{indent}        <div class="collapsible">')
         monster_totals = collections.defaultdict(int)
-        for monster_name in room['monsters']:
+        for monster_code in room['monsters']:
+            monster_name = monster_code.replace('*', '')
             monster_totals[monster_name] += 1
         monster_counts = collections.defaultdict(int)
-        for monster_name in room['monsters']:
+        for monster_code in room['monsters']:
+            monster_name = monster_code.replace('*', '')
+            style = ' style="font-weight: bold"' if (monster_code[-1] == '*') else ''
             monster_counts[monster_name] += 1
             monster_title = monster_name
             monster_id = monster_ids[monster_name] + str(monster_counts[monster_name])
@@ -626,15 +629,13 @@ if __name__ == '__main__':
             print('    "' + unique_monster_id + '",')
             if input_type == 'radio':
                 group = groups[monster_name]
-                html.append(f'{indent}    <input type="{input_type}" id="{unique_monster_id}" name="{room_name}" value="{monster_name}">')
+                html.append(f'{indent}            <input type="{input_type}" id="{unique_monster_id}" name="{room_name}" value="{monster_name}">')
             else:
-                html.append(f'{indent}    <input type="{input_type}" id="{unique_monster_id}" name="{room_name}" value="{monster_name}">')
-            html.append(f'{indent}    <label for="{unique_monster_id}"> {monster_title}</label><br>')
-        html.append(f'{indent}</fieldset>')
-    html.append('        </form>')
-    html.append('        <script type="text/javascript" src="experience_route.js"></script>')
-    html.append('    </body>')
-    html.append('</html>')
+                html.append(f'{indent}            <input type="{input_type}" id="{unique_monster_id}" name="{room_name}" value="{monster_name}">')
+            html.append(f'{indent}            <label for="{unique_monster_id}"{style}> {monster_title}</label><br>')
+        html.append(f'{indent}        </div>')
+        html.append(f'{indent}    </fieldset>')
+    html.append(f'{indent}</form>')
     with open('experience_route.out', 'w', encoding="utf-8") as open_file:
         for line in html:
             open_file.write(line + '\n')
