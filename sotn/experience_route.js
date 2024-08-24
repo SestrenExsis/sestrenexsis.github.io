@@ -290,6 +290,7 @@ class Player {
     ];
     constructor() {
         this.xp = 0;
+        this.level_up_animations__clock_rush_only = [];
         this.level_up_animations = [];
     }
 
@@ -306,7 +307,7 @@ class Player {
         return result;
     }
 
-    kill(description, monsters) {
+    kill(description, monsters, clock_rush) {
         let prev_xp = this.xp;
         let prev_level = this.level;
         let total_xp_gains = 0;
@@ -338,6 +339,9 @@ class Player {
             let xp_under = Math.max(0, Player.levels.at(prev_level + 1) - prev_xp - 1);
             let xp_over = Math.max(0, this.xp - Player.levels.at(this.level));
             this.level_up_animations.push(description + " [+" + xp_under + ", -" + xp_over + "]");
+            if (clock_rush) {
+                this.level_up_animations__clock_rush_only.push(description + " [+" + xp_under + ", -" + xp_over + "]");
+            }
             let levels_gained = this.level - prev_level;
             let result = " +[";
             for (let i = 0; i < levels_gained; i++) {
@@ -422,6 +426,8 @@ function refresh(update_url) {
     let player = new Player();
     inputs.forEach((input_id) => {
         let element = document.getElementById(input_id);
+        let clock_rush = input_id.charAt(0) <= 'e';
+        console.log(input_id + " "  + clock_rush);
         if (element.label.innerHTML.endsWith("]")) {
             element.label.innerHTML = element.label.innerHTML.slice(0, element.label.innerHTML.indexOf("+") - 1);        }
         if (element.checked) {
@@ -430,30 +436,30 @@ function refresh(update_url) {
                 message += player.kill("Slogra and Gaibon", [
                     monsters["Slogra"],
                     monsters["Gaibon"],
-                ]);
+                ], clock_rush);
             }
             else if (element.value == "No Slogra and Gaibon Double Kill") {
-                message += player.kill("Slogra", [monsters["Slogra"]]);
-                message += player.kill("Gaibon", [monsters["Gaibon"]]);
+                message += player.kill("Slogra", [monsters["Slogra"]], clock_rush);
+                message += player.kill("Gaibon", [monsters["Gaibon"]], clock_rush);
             }
             else if (element.value == "Werewolf and Minotaurus Double Kill") {
                 message += player.kill("Werewolf and Minotaurus", [
                     monsters["Werewolf"],
                     monsters["Minotaurus"],
-                ]);
+                ], clock_rush);
             }
             else if (element.value == "Kill Werewolf First") {
-                message += player.kill("Werewolf", [monsters["Werewolf"]]);
-                message += player.kill("Minotaurus", [monsters["Minotaurus"]]);
+                message += player.kill("Werewolf", [monsters["Werewolf"]], clock_rush);
+                message += player.kill("Minotaurus", [monsters["Minotaurus"]], clock_rush);
             }
             else if (element.value == "Kill Minotaurus First") {
-                message += player.kill("Minotaurus", [monsters["Minotaurus"]]);
-                message += player.kill("Werewolf", [monsters["Werewolf"]]);
+                message += player.kill("Minotaurus", [monsters["Minotaurus"]], clock_rush);
+                message += player.kill("Werewolf", [monsters["Werewolf"]], clock_rush);
             }
             else if (element.value.startsWith("Skip ")) {
                 // Skip this monster
             } else {
-                message += player.kill(element.value, [monsters[element.value]]);
+                message += player.kill(element.value, [monsters[element.value]], clock_rush);
             }
             element.label.innerHTML += message;
         }
@@ -461,6 +467,7 @@ function refresh(update_url) {
     document.getElementById("player_xp").value = player.xp;
     document.getElementById("player_level").value = player.level;
     document.getElementById("player_xp_to_next_level").value = Player.levels.at(player.level + 1) - player.xp;
+    document.getElementById("player_level_up_animations__clock_rush_only").value = player.level_up_animations__clock_rush_only.length;
     document.getElementById("player_level_up_animations").value = player.level_up_animations.length;
     console.clear();
     for (i = 0; i < player.level_up_animations.length; i++) {
