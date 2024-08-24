@@ -477,7 +477,11 @@ function refresh(update_url) {
     if (update_url) {
         const url = new URL(window.location);
         inputs.forEach((input) => {
-            url.searchParams.set(input, (document.getElementById(input).checked) ? 1 : 0);
+            if (document.getElementById(input).checked) {
+                url.searchParams.set(input, (document.getElementById(input).checked) ? 1 : 0);
+            } else {
+                url.searchParams.delete(input);
+            }
         })
         history.replaceState({}, "", url);
     }
