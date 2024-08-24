@@ -483,6 +483,7 @@ function refresh(update_url) {
                 url.searchParams.delete(input);
             }
         })
+        url.searchParams.sort();
         history.replaceState({}, "", url);
     }
 }
