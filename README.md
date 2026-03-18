@@ -1,5 +1,10 @@
 ## SOTN Shuffler Devlog
 
+### Missing self-imposed deadlines can still be frustrating
+
+In the SOTN community, it has been a tradition for the past several years that the randomizer put out [a silly or fun preset on April Fool's Day](https://github.com/sotnrando/sotnrando/blob/511785afa85ec8e8ae06052fccaec6f7ef1e4e6f/presets/empty-hand.json#L5). Months ago, it was my intention to have some sort of shuffler-specific April Fool's idea. However, with the time I've had available ...
+[read more](https://sestrenexsis.github.io/devlog/2026-03-18-april-fools.md)
+
 ### Some minor bugs are worth spending a lot of time fixing
 
 Agonizing over the waterfall sound bug has been an interesting tug-of-war between wanting to get one very specific, largely superfluous, bug fixed and wanting to not get distracted by it and instead focus on adding more impactful features to the project. From a practicality standpoint, it doesn't matter ... [read more](https://sestrenexsis.github.io/devlog/2025-12-17-minor-bugs-worth-fixing.html)
