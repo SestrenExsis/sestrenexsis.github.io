@@ -3,7 +3,7 @@
 ### Missing self-imposed deadlines can still be frustrating
 
 In the SOTN community, it has been a tradition for the past several years that the randomizer put out [a silly or fun preset on April Fool's Day](https://github.com/sotnrando/sotnrando/blob/511785afa85ec8e8ae06052fccaec6f7ef1e4e6f/presets/empty-hand.json#L5). Months ago, it was my intention to have some sort of shuffler-specific April Fool's idea. However, with the time I've had available ...
-[read more](https://sestrenexsis.github.io/devlog/2026-03-18-april-fools.md)
+[read more](https://sestrenexsis.github.io/devlog/2026-03-18-april-fools.html)
 
 ### Some minor bugs are worth spending a lot of time fixing
 
