@@ -2,7 +2,7 @@
 
 ### Missing self-imposed deadlines can still be frustrating
 
-###### 🐛 created on 2026-03-18, last updated on 2026-03-18
+###### 🤡 created on 2026-03-18, last updated on 2026-03-18
 
 In the SOTN community, it has been a tradition for the past several years that the randomizer put out [a silly or fun preset on April Fool's Day](https://github.com/sotnrando/sotnrando/blob/511785afa85ec8e8ae06052fccaec6f7ef1e4e6f/presets/empty-hand.json#L5). Months ago, it was my intention to have some sort of shuffler-specific April Fool's idea. However, with the time I've had available to work on the shuffler, it seemed much wiser to focus on the migration to NodeJS and patching bugs that migration revealed. That was probably the correct choice, but it still leaves me feeling unsatisfied to an extent.
 
