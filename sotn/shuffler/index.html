@@ -117,10 +117,11 @@
             <div>
                 <label for="binFile">Choose SOTN BIN file</label>
                 <input id="binFile" type="file" accept=".bin">
+                <p id="extractionStatus"></p>
                 <p><a id="downloadExtractionLink"></a></p>
             </div>
             <div>
-                <input id="generateButton" type="submit" value="Generate" />
+                <input id="generateButton" type="submit" value="Generate a seed file in .PPF format" disabled />
                 <p><a id="downloadPPFLink"></a></p>
             </div>
         </div>
@@ -313,6 +314,7 @@
 
         document.getElementById('binFile')
         .addEventListener('change', () => {
+            document.getElementById('extractionStatus').innerHTML = 'Processing BIN ... please wait a few seconds'
             const selectedFile = document.getElementById('binFile').files[0]
             const reader = new FileReader()
             reader
@@ -325,12 +327,14 @@
                     data.binDigest = digestHex
                     data.extraction = getExtractionFromBin(buffer)
                     const link = document.getElementById('downloadExtractionLink')
-                    link.innerHTML = 'Download extraction.json'
+                    link.innerHTML = 'Download extraction.json (optional)'
                     link.download = "extraction.json"
                     const blobData = new Blob([JSON.stringify(data.extraction)], {
                         type: 'text/plain',
                     })
                     link.href = window.URL.createObjectURL(blobData)
+                    document.getElementById('extractionStatus').innerHTML = ''
+                    document.getElementById('generateButton').disabled = false
                 })
             })
             reader.readAsArrayBuffer(selectedFile)
@@ -355,6 +359,8 @@
                 type: 'application/octet-binary',
             })
             link.href = window.URL.createObjectURL(blobData)
+            document.getElementById('generateButton').value = 'Generate another seed file in .PPF format'
+            document.getElementById('generationSttus').innerHTML = ''
         })
     </script>
 </html>
