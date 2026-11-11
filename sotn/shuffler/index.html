@@ -27,11 +27,11 @@
                             <legend>Map Shuffler</legend>
                             <div>
                                 <input name="roomShuffler.on" type="checkbox" checked />
-                                <label for="roomShuffler.on">Shuffle rooms?</label>
+                                <label for="roomShuffler.on"><strong>Shuffle rooms?</strong></label>
                             </div>
                             <div>
                                 <input name="stageShuffler.on" type="checkbox" checked />
-                                <label for="stageShuffler.on">Shuffle stages?</label>
+                                <label for="stageShuffler.on"><strong>Shuffle stages?</strong></label>
                             </div>
                             <div>
                                 <input name="hinter.stageLinks" type="checkbox" checked />
@@ -65,7 +65,7 @@
                             </div>
                             <div>
                                 <input name="rewardShuffler.on" type="checkbox" checked />
-                                <label for="rewardShuffler.on">Shuffle relics?</label>
+                                <label for="rewardShuffler.on"><strong>Shuffle relics?</strong></label>
                             </div>
                         </fieldset>
                     </div>
@@ -77,7 +77,7 @@
                                 <label for="patcher.list=assignUniqueIdToRelicAfterDrawbridge">Assign unique ID to relic after drawbridge?</label>
                             </div>
                             <div>
-                                <input name="patcher.list" value="enableDebugMode" type="checkbox" checked />
+                                <input name="patcher.list" value="enableDebugMode" type="checkbox" />
                                 <label for="enableDebugMode">Enable Debug Mode?</label>
                             </div>
                             <div>
@@ -122,7 +122,9 @@
             </div>
             <div>
                 <input id="generateButton" type="submit" value="Generate a seed file in .PPF format" disabled />
+                <p id="generationStatus"></p>
                 <p><a id="downloadPPFLink"></a></p>
+                <p id="debugInfo"></p>
             </div>
         </div>
     </body>
@@ -341,6 +343,10 @@
         })
         
         document.getElementById('generateButton')
+        .addEventListener('mousedown', () => {
+            document.getElementById('generationStatus').innerHTML = '<strong>Generating</strong> ... if one of the bolded options above was selected, this may take a few minutes.'
+        })
+        document.getElementById('generateButton')
         .addEventListener('click', () => {
             const shufflerOptions = getShufflerOptions()
             console.log('shufflerOptions:', shufflerOptions)
@@ -360,7 +366,8 @@
             })
             link.href = window.URL.createObjectURL(blobData)
             document.getElementById('generateButton').value = 'Generate another seed file in .PPF format'
-            document.getElementById('generationSttus').innerHTML = ''
+            document.getElementById('generationStatus').innerHTML = `<strong>Finished</strong> generating after ${processedOptions.analysis.solver.attempts} attempts!`
+            document.getElementById('debugInfo').innerHTML = `Debug info: [${shortDescription}]`
         })
     </script>
 </html>
