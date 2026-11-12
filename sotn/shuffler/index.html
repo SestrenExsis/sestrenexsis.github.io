@@ -314,6 +314,29 @@
             return result
         }
 
+        function generateSeed() {
+            const shufflerOptions = getShufflerOptions()
+            console.log('shufflerOptions:', shufflerOptions)
+            const processedOptions = sotnShuffler.core.processOptions(shufflerOptions, data.extraction)
+            processedOptions.changes = processedOptions.changes.concat(BinPatcher.getDefaultChangeDependencies())
+            const shortDescription = sotnShuffler.core.getShortDescription(data.binDigest.toString('hex'), shufflerOptions, processedOptions.seeds.seedName, sotnShuffler.core.VERSION)
+            console.log('shortDescription:', shortDescription)
+            const ppfData = generatePPF(data.extraction, processedOptions.changes, shortDescription)
+            console.log('ppfData.length:', ppfData.length)
+            // Create link to downloadable PPF
+            const link = document.getElementById('downloadPPFLink')
+            const fileName = processedOptions.seeds.seedName + '.ppf'
+            link.innerHTML = 'Download '+ fileName
+            link.download = fileName
+            const blobData = new Blob([ppfData], {
+                type: 'application/octet-binary',
+            })
+            link.href = window.URL.createObjectURL(blobData)
+            document.getElementById('generateButton').value = 'Generate another seed file in .PPF format'
+            document.getElementById('generationStatus').innerHTML = `<strong>Finished</strong> generating after ${processedOptions.analysis.solver.attempts} attempt(s)!`
+            document.getElementById('debugInfo').innerHTML = `Debug info: [${shortDescription}]`
+        }
+
         document.getElementById('binFile')
         .addEventListener('change', () => {
             document.getElementById('extractionStatus').innerHTML = 'Processing BIN ... please wait a few seconds'
@@ -343,31 +366,12 @@
         })
         
         document.getElementById('generateButton')
-        .addEventListener('mousedown', () => {
-            document.getElementById('generationStatus').innerHTML = '<strong>Generating</strong> ... if one of the bolded options above was selected, this may take a few minutes.'
-        })
-        document.getElementById('generateButton')
         .addEventListener('click', () => {
-            const shufflerOptions = getShufflerOptions()
-            console.log('shufflerOptions:', shufflerOptions)
-            const processedOptions = sotnShuffler.core.processOptions(shufflerOptions, data.extraction)
-            processedOptions.changes = processedOptions.changes.concat(BinPatcher.getDefaultChangeDependencies())
-            const shortDescription = sotnShuffler.core.getShortDescription(data.binDigest.toString('hex'), shufflerOptions, processedOptions.seeds.seedName, sotnShuffler.core.VERSION)
-            console.log('shortDescription:', shortDescription)
-            const ppfData = generatePPF(data.extraction, processedOptions.changes, shortDescription)
-            console.log('ppfData.length:', ppfData.length)
-            // Create link to downloadable PPF
             const link = document.getElementById('downloadPPFLink')
-            const fileName = processedOptions.seeds.seedName + '.ppf'
-            link.innerHTML = 'Download '+ fileName
-            link.download = fileName
-            const blobData = new Blob([ppfData], {
-                type: 'application/octet-binary',
-            })
-            link.href = window.URL.createObjectURL(blobData)
-            document.getElementById('generateButton').value = 'Generate another seed file in .PPF format'
-            document.getElementById('generationStatus').innerHTML = `<strong>Finished</strong> generating after ${processedOptions.analysis.solver.attempts} attempts!`
-            document.getElementById('debugInfo').innerHTML = `Debug info: [${shortDescription}]`
+            link.innerHTML = ''
+            document.getElementById('generationStatus').innerHTML = '<strong>Generating</strong> ... if one of the bolded options above was selected, this may take a few minutes.'
+            document.getElementById('debugInfo').innerHTML = ''
+            setTimeout(generateSeed, 5)
         })
     </script>
 </html>
