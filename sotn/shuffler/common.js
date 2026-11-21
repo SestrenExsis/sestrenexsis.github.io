@@ -1123,6 +1123,8 @@
             locationDemonCard: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'abandonedMine',
+                    room: 'demonCard',
                     locationDemonCard: true,
                 },
             },
@@ -1158,12 +1160,16 @@
             locationBatCard: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'alchemyLaboratory',
+                    room: 'batCardRoom',
                     locationBatCard: true,
                 },
             },
             locationSkillOfWolf: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'alchemyLaboratory',
+                    room: 'skillOfWolfRoom',
                     locationSkillOfWolf: true,
                 },
             },
@@ -1224,12 +1230,16 @@
             locationPowerOfWolf: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'castleEntrance',
+                    room: 'afterDrawbridge',
                     locationPowerOfWolf: true,
                 },
             },
             locationCubeOfZoe: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'castleEntrance',
+                    room: 'cubeOfZoeRoom',
                     locationCubeOfZoe: true,
                 },
             },
@@ -1274,18 +1284,24 @@
             locationLeapStone: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'castleKeep',
+                    room: 'keepArea',
                     locationLeapStone: true,
                 },
             },
             locationPowerOfMist: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'castleKeep',
+                    room: 'keepArea',
                     locationPowerOfMist: true,
                 },
             },
             locationGhostCard: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'castleKeep',
+                    room: 'ghostCardRoom',
                     locationGhostCard: true,
                 },
             },
@@ -1315,6 +1331,8 @@
             locationSpikeBreaker: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'catacombs',
+                    room: 'spikeBreakerRoom',
                     locationSpikeBreaker: true,
                 },
             },
@@ -1330,6 +1348,8 @@
             locationFireOfBat: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'clockTower',
+                    room: 'fireOfBatRoom',
                     locationFireOfBat: true,
                 },
             },
@@ -1358,6 +1378,8 @@
             locationFormOfMist: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'colosseum',
+                    room: 'topOfElevatorShaft',
                     locationFormOfMist: true,
                 },
             },
@@ -1380,24 +1402,32 @@
             locationSoulOfBat: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'longLibrary',
+                    room: 'lesserDemonArea',
                     locationSoulOfBat: true,
                 },
             },
             locationJewelOfOpen: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'longLibrary',
+                    room: 'shop',
                     locationJewelOfOpen: true,
                 },
             },
             locationFaerieCard: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'longLibrary',
+                    room: 'faerieCardRoom',
                     locationFaerieCard: true,
                 },
             },
             locationFaerieScroll: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'longLibrary',
+                    room: 'spellbookArea',
                     locationFaerieScroll: true,
                 },
             },
@@ -1434,12 +1464,16 @@
             locationSpiritOrb: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'marbleGallery',
+                    room: 'spiritOrbRoom',
                     locationSpiritOrb: true,
                 },
             },
             locationGravityBoots: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'marbleGallery',
+                    room: 'gravityBootsRoom',
                     locationGravityBoots: true,
                 },
             },
@@ -1483,12 +1517,16 @@
             locationEchoOfBat: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'olroxsQuarters',
+                    room: 'echoOfBatRoom',
                     locationEchoOfBat: true,
                 },
             },
             locationSwordCard: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'olroxsQuarters',
+                    room: 'swordCardRoom',
                     locationSwordCard: true,
                 },
             },
@@ -1525,6 +1563,8 @@
             locationSoulOfWolf: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'outerWall',
+                    room: 'elevatorShaftRoom',
                     locationSoulOfWolf: true,
                 },
             },
@@ -1567,6 +1607,8 @@
             locationSilverRing: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'royalChapel',
+                    room: 'silverRingRoom',
                     locationSilverRing: true,
                 },
             },
@@ -1615,18 +1657,24 @@
             locationHolySymbol: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'undergroundCaverns',
+                    room: 'holySymbolRoom',
                     locationHolySymbol: true,
                 },
             },
             locationMermanStatue: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'undergroundCaverns',
+                    room: 'mermanStatueRoom',
                     locationMermanStatue: true,
                 },
             },
             locationGoldRing: {
                 nodeType: 'check',
                 requirement: {
+                    stage: 'undergroundCaverns',
+                    room: 'falseSaveRoom',
                     locationGoldRing: true,
                 },
             },
@@ -15164,6 +15212,36 @@
         },
     }
 
+    function getRoomsInfo() {
+        const result = {}
+        Object.entries(ROOMS_INFO)
+        .forEach(([stageName, stageInfo]) => {
+            result[stageName] = {}
+            Object.entries(stageInfo)
+            .forEach(([roomName, roomInfo]) => {
+                result[stageName][roomName] = []
+                roomInfo.regions
+                .forEach((regionInfo) => {
+                    result[stageName][roomName].push({
+                        left: regionInfo.requirements.at(0).positionX.minimum,
+                        top: regionInfo.requirements.at(0).positionY.minimum,
+                        right: 1 + regionInfo.requirements.at(0).positionX.maximum,
+                        bottom: 1 + regionInfo.requirements.at(0).positionY.maximum,
+                        section: regionInfo.outcome.section,
+                    })
+                })
+                result[stageName][roomName].push({
+                    left: 0,
+                    top: 0,
+                    right: roomInfo.roomInfo.width,
+                    bottom: roomInfo.roomInfo.height,
+                    section: 'NONE',
+                })
+            })
+        })
+        return result
+    }
+    
     const TELEPORTERS = {
         fromAbandonedMineToCatacombs: { // fromCatacombsToAbandonedMine
             sourceStage: 'abandonedMine',
