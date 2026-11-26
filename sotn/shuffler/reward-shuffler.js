@@ -1801,7 +1801,7 @@
             positionX: 136,
             positionY: 640,
             time: 180.0,
-            // techniqueLogicalRisks: true,
+            techniqueLogicalRisks: true,
             techniqueSolveBoxPuzzle: true,
         }
         // 24 locations in total

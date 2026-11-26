@@ -1,8 +1,20 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <title>SOTN Shuffler</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="/images/favicon.ico">
+        <link rel="stylesheet" href="../styles/main.css">
+        <link rel="stylesheet" href="../styles/navbar.css">
     </head>
     <body>
+        <header>
+            <h1>Castlevania: Symphony of the Night</h1>
+            <h3>Map Shuffler</h3>
+        </header>
+        <div id="navbar-container"></div>
+        <script src="/src/navbar.js"></script>
         <div>
             <form id="shufflerOptions">
                 <div id="options">
@@ -129,7 +141,7 @@
         </div>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.1/seedrandom.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@sestren/bin-patcher@1.0.1/dist/bin-patcher.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@sestren/bin-patcher@1.0.2/dist/bin-patcher.js"></script>
     <!-- common.js must be imported before anything dependent on it -->
     <script src="common.js"></script>
     <script src="enemy-drop-randomizer.js"></script>
